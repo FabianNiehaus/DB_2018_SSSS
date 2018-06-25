@@ -1,0 +1,14 @@
+Aufgabenverteilung:
+- Frontend (Tuyet)
+    - HTML
+    - Spieloberfläche
+- Intermittent (Andi)
+    - Input / Output (+ Validation)
+    - Login (+ Session Fixation)
+- Backend (Fabi)
+    - Server
+    - Spielstände
+- SQL (Jesse)
+    - Lesen
+    - Schreiben
+    - Wort-DB füllen
