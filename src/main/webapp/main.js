@@ -20,3 +20,18 @@ function disconnect() {
 function sendMessage() {
     conn.send(document.getElementById("msg").value);
 }
+
+function sendAction (action) {
+    conn.send(action)
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+    let boxes = document.querySelectorAll(".box");
+
+    Array.from(boxes, function(box) {
+        box.addEventListener("click", function() {
+            alert(this.classList[1]);
+            sendAction(this.classList[1].toString());
+        });
+    });
+});

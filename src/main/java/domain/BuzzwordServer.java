@@ -26,31 +26,39 @@ public class BuzzwordServer {
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
 
+    /*
     public BuzzwordServer() {
         this.gameManagement = new GameManagement();
         this.playerManagement = new PlayerManagement();
         this.buzzwordCategoryManagement = new BuzzwordCategoryManagement();
     }
-
-    /*public static void main(String[] args){
-        BuzzwordServer buzzwordServer = new BuzzwordServer();
-    }*/
+    */
 
     private static Set<Session> userSessions = Collections.newSetFromMap(new ConcurrentHashMap<Session, Boolean>());
 
     @OnOpen
-    public void open(Session session) {
+    public void onOpen(Session session) {
 
-        System.out.println("Neue Verbindung aufgebaut...");
         userSessions.add(session);
+
+        for (Session currentSession : userSessions) {
+
+            currentSession.getAsyncRemote().sendText(session.getId() + " ist dem Spiel beigetreten.");
+
+        }
 
     }
 
     @OnClose
-    public void close(Session session) {
+    public void onClose(Session session) {
 
-        System.out.println("Verbindung getrennt...");
         userSessions.remove(session);
+
+        for (Session currentSession : userSessions) {
+
+            currentSession.getAsyncRemote().sendText(session.getId() + " hat das Spiel verlassen.");
+
+        }
 
     }
 
@@ -59,15 +67,17 @@ public class BuzzwordServer {
     }
 
     @OnMessage
-    public void handleMessage(String message, Session session){
+    public void onMessage(String message, Session session){
 
-        broadcast(message);
+        broadcast(session, message);
     }
 
-    public static void broadcast(String msg) {
-        System.out.println("Broadcast Nachricht an alle:" + msg);
-        for (Session session : userSessions) {
-            session.getAsyncRemote().sendText("Re: " + msg);
+    public static void broadcast(Session session, String msg) {
+
+        for (Session currentSession : userSessions) {
+
+            currentSession.getAsyncRemote().sendText(session.getId() + " hat Feld " + msg + " angeklickt");
+
         }
 
     }
