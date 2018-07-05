@@ -1,5 +1,9 @@
 package domain;
 
+import data.Game;
+import data.Player;
+import exceptions.IDNotFoundException;
+
 import javax.inject.Inject;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -15,6 +19,7 @@ public class BuzzwordServer {
 
     private GameManagement gameManagement;
     private PlayerManagement playerManagement;
+    private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
     @Inject
     private SessionHandler sessionHandler;
@@ -22,6 +27,7 @@ public class BuzzwordServer {
     public BuzzwordServer() {
         this.gameManagement = new GameManagement();
         this.playerManagement = new PlayerManagement();
+        this.buzzwordCategoryManagement = new BuzzwordCategoryManagement();
     }
 
     public static void main(String[] args){
@@ -47,5 +53,16 @@ public class BuzzwordServer {
         sessionHandler.handleMessage(message, session);
     }
 
+    private void startNewGame(int playerID, String buzzwordCategoryName){
+
+        try {
+            Player initialPlayer = playerManagement.getPlayer(playerID);
+
+            Game game = gameManagement.createGame(buzzwordCategoryManagement.getBuzzwordCategory(buzzwordCategoryName));
+            // TODO: Weitere Erstellung eines Spiels
+        } catch (IDNotFoundException e){
+            // TODO: Was tun, wenn der Player nicht in der Datenbank exisitert?
+        }
+    }
 
 }
