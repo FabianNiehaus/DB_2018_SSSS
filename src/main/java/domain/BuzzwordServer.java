@@ -31,9 +31,9 @@ public class BuzzwordServer {
         this.buzzwordCategoryManagement = new BuzzwordCategoryManagement();
     }
 
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         BuzzwordServer buzzwordServer = new BuzzwordServer();
-    }
+    }*/
 
     @OnOpen
     public void open(Session session) {

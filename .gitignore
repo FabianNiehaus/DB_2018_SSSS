@@ -37,8 +37,7 @@ Desktop.ini
 ######################
 # OSX
 ######################
- 
-.DS_Store
+
 .svn
  
 # Thumbnails
@@ -52,7 +51,6 @@ Desktop.ini
 # NetBeans
 ######################
 nbproject/
-build/
 nbbuild/
 dist/
 nbdist/
@@ -111,6 +109,10 @@ derby.log
 ######################
 # Maven
 ######################
-
 log/
-target/
+
+
+#####################
+# Glassfish
+#####################
+!/glassfish5/

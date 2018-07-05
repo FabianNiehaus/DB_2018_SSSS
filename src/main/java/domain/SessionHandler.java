@@ -8,25 +8,25 @@ import javax.websocket.Session;
 
 @ApplicationScoped
 public class SessionHandler {
-    private final Set<Session> sessions = new HashSet<>();
+        private final Set<Session> sessions = new HashSet<>();
 
-    public void addSession(Session session) {
-        sessions.add(session);
-    }
+        public void addSession(Session session) {
+            sessions.add(session);
+        }
 
-    public void removeSession(Session session) {
-        sessions.remove(session);
-    }
+        public void removeSession(Session session) {
+            sessions.remove(session);
+        }
 
-    public void handleMessage(String message, Session session){
+        public void handleMessage(String message, Session session){
 
-    }
+        }
 
-    private void sendToAllConnectedSessions(JsonObject message) {
+        private void sendToAllConnectedSessions(JsonObject message) {
 
-    }
+        }
 
-    private void sendToSession(Session session, JsonObject message) {
+        private void sendToSession(Session session, JsonObject message) {
 
-    }
+        }
 }
