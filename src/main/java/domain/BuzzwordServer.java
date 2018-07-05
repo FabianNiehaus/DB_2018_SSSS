@@ -13,6 +13,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import javax.enterprise.context.ApplicationScoped;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 @ApplicationScoped
 @ServerEndpoint("/actions")
@@ -21,9 +23,6 @@ public class BuzzwordServer {
     private GameManagement gameManagement;
     private PlayerManagement playerManagement;
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
-
-    @Inject
-    private SessionHandler sessionHandler;
 
     public BuzzwordServer() {
         this.gameManagement = new GameManagement();
@@ -35,14 +34,18 @@ public class BuzzwordServer {
         BuzzwordServer buzzwordServer = new BuzzwordServer();
     }*/
 
+    LinkedHashMap<Session, Player> userSessions = new LinkedHashMap<>();
+
     @OnOpen
     public void open(Session session) {
-        sessionHandler.addSession(session);
+        System.out.println("Neue Verbindung aufgebaut: " + session.getId());
+        userSessions.put(session, null);
     }
 
     @OnClose
     public void close(Session session) {
-        sessionHandler.removeSession(session);
+        System.out.println("Verbindung getrennt: " + session.getId());
+        userSessions.remove(session);
     }
 
     @OnError
@@ -51,7 +54,8 @@ public class BuzzwordServer {
 
     @OnMessage
     public void handleMessage(String message, Session session) {
-        sessionHandler.handleMessage(message, session);
+
+
     }
 
     private void startNewGame(int playerID, String buzzwordCategoryName){
