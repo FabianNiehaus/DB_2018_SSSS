@@ -7,7 +7,13 @@ Aufgabenverteilung:
     - Login (+ Session Fixation)
 - Backend (Fabi)
     - Server
+        - Spiel erstellen
+        - Spiel beitreten
+        - Alles laden (Serverstart)
+        - Feld markieren
     - Spielstände
+        - Speichern (-> Serialisierung?)
+        - Game State: Aktiv, Gewonnen / Verloren, Beendet
 - SQL (Jesse)
     - Lesen
     - Schreiben

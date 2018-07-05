@@ -3,6 +3,7 @@ package domain;
 import data.Game;
 import data.Player;
 import exceptions.IDNotFoundException;
+import exceptions.IncorrectPasswordException;
 
 import javax.inject.Inject;
 import javax.websocket.OnClose;
@@ -56,7 +57,7 @@ public class BuzzwordServer {
     private void startNewGame(int playerID, String buzzwordCategoryName){
 
         try {
-            Player initialPlayer = playerManagement.getPlayer(playerID);
+            Player initialPlayer = playerManagement.findPlayerByID(playerID);
 
             Game game = gameManagement.createGame(buzzwordCategoryManagement.getBuzzwordCategory(buzzwordCategoryName));
             // TODO: Weitere Erstellung eines Spiels
@@ -65,4 +66,30 @@ public class BuzzwordServer {
         }
     }
 
+    private void joinGame(int playerID, int gameID) {
+        // TODO: Soll das joinen jederzeit gehen? Oder soll das Game einen State "InProgress" haben, bei dem joinen nicht mehr möglich ist, bzw die Felder zufällig verteilt werden?
+        try {
+            Player player = playerManagement.findPlayerByID(playerID);
+
+            Game game = gameManagement.getGame(gameID);
+
+            game.addPlayerToGame(player);
+
+            // TODO: Update GUI
+        } catch (IDNotFoundException e){
+            // TODO: Was tun, wenn der Player oder das Spiel nicht in der Datenbank exisitert?
+        }
+    }
+
+    private void changeGameState(int gameID, int playerID) {
+
+    }
+
+    public void playerLogin(String loginName, String loginPassword){
+        try{
+            playerManagement.playerLogin(loginName, loginPassword);
+        } catch (IDNotFoundException | IncorrectPasswordException e){
+            // TODO: Login failed
+        }
+    }
 }

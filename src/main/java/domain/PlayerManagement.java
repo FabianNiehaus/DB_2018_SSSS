@@ -2,12 +2,14 @@ package domain;
 
 import data.Player;
 import exceptions.IDNotFoundException;
+import exceptions.IncorrectPasswordException;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 public class PlayerManagement {
 
-    private LinkedList<Player> players;
+    // Player and is Logged In
+    private HashMap<Player, Boolean> players;
 
     public Player createPlayer(String username, String loginname, String password, boolean isAdmin){
 
@@ -15,7 +17,7 @@ public class PlayerManagement {
 
         Player newPlayer = new Player(id, username, loginname, password);
 
-        players.add(newPlayer);
+        players.put(newPlayer, false);
 
         boolean addedToPersistence = false;
         // TODO: Co-Routine sinnvoller? (ggf. SQL gerade nicht verfügbar)
@@ -26,13 +28,24 @@ public class PlayerManagement {
         return newPlayer;
     }
 
-    public Player getPlayer(int id) throws IDNotFoundException {
-        for (Player player: players)
+    public Player findPlayerByID(int id) throws IDNotFoundException {
+        for (HashMap.Entry<Player, Boolean> entry: players.entrySet())
         {
+            Player player = entry.getKey();
             if(player.getId() == id) return player;
         }
 
         throw new IDNotFoundException("Player", id);
+    }
+
+    public Player findPlayerByLoginName(String loginName) throws IDNotFoundException {
+        for (HashMap.Entry<Player, Boolean> entry: players.entrySet())
+        {
+            Player player = entry.getKey();
+            if(player.getLoginname().equals(loginName)) return player;
+        }
+
+        throw new IDNotFoundException("Player", loginName);
     }
 
     private boolean writeSinglePlayerToPersistence(Player player){
@@ -51,5 +64,22 @@ public class PlayerManagement {
 
     private void loadPlayers(){
         // TODO: Spieler aus SQL laden, wenn Spieler-Management gestartet wird
+    }
+
+    public void playerLogin(String loginName, String password) throws IDNotFoundException, IncorrectPasswordException {
+        Player playertoLogIn = findPlayerByLoginName(loginName);
+
+        if(password == playertoLogIn.getPassword()){
+            players.put(playertoLogIn, true);
+        } else {
+            throw new IncorrectPasswordException();
+        }
+
+    }
+
+    public boolean isPlayerLoggedIn(int playerID) throws IDNotFoundException{
+        Player player = findPlayerByID(playerID);
+        // Return boolean value for player login state. true = logged in.
+        return players.get(player);
     }
 }

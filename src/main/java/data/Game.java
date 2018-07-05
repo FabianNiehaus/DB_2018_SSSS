@@ -14,6 +14,16 @@ public class Game {
 
     private int id;
 
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    private Player winner = null;
+
     public int getId() {
         return id;
     }
