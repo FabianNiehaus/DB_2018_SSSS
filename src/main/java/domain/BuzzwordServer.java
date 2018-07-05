@@ -13,11 +13,20 @@ import javax.enterprise.context.ApplicationScoped;
 @ServerEndpoint("/actions")
 public class BuzzwordServer {
 
-    private GameManagement gm;
-    private PlayerManagement pm;
+    private GameManagement gameManagement;
+    private PlayerManagement playerManagement;
 
     @Inject
     private SessionHandler sessionHandler;
+
+    public BuzzwordServer() {
+        this.gameManagement = new GameManagement();
+        this.playerManagement = new PlayerManagement();
+    }
+
+    public static void main(String[] args){
+        BuzzwordServer buzzwordServer = new BuzzwordServer();
+    }
 
     @OnOpen
     public void open(Session session) {
@@ -26,6 +35,7 @@ public class BuzzwordServer {
 
     @OnClose
     public void close(Session session) {
+        sessionHandler.removeSession(session);
     }
 
     @OnError
@@ -34,5 +44,8 @@ public class BuzzwordServer {
 
     @OnMessage
     public void handleMessage(String message, Session session) {
+        sessionHandler.handleMessage(message, session);
     }
+
+
 }

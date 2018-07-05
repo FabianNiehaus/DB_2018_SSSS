@@ -18,9 +18,15 @@ public class SessionHandler {
         sessions.remove(session);
     }
 
+    public void handleMessage(String message, Session session){
+
+    }
+
     private void sendToAllConnectedSessions(JsonObject message) {
+
     }
 
     private void sendToSession(Session session, JsonObject message) {
+
     }
 }
