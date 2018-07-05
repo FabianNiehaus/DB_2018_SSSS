@@ -2,13 +2,13 @@
   <security-configurations>
     <authentication-service default="true" name="adminAuth" use-password-credential="true">
       <security-provider provider-name="adminSpc" name="spcrealm" type="LoginModule">
-        <login-module-config module-class="com.sun.enterprise.admin.util.AdminLoginModule" control-flag="sufficient" name="adminSpecialLM">
+        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.admin.util.AdminLoginModule" name="adminSpecialLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
       </security-provider>
       <security-provider provider-name="adminFile" name="filerealm" type="LoginModule">
-        <login-module-config module-class="com.sun.enterprise.security.auth.login.FileLoginModule" control-flag="sufficient" name="adminFileLM">
+        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.security.auth.login.FileLoginModule" name="adminFileLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
@@ -40,7 +40,6 @@
   </resources>
   <servers>
     <server config-ref="server-config" name="server">
-      <application-ref ref="BuzzwordBingo" virtual-servers="server"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
     </server>
@@ -179,7 +178,6 @@
         <jvm-options>-Dfelix.fileinstall.disableConfigSave=false</jvm-options>
         <jvm-options>-XX:NewRatio=2</jvm-options>
         <jvm-options>-Dcom.ctc.wstx.returnNullForDefaultNamespace=true</jvm-options>
-        <jvm-options>-javaagent:C:\Users\Fabian\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\181.5087.20\lib\rt\debugger-agent.jar=file:/C:/Users/Fabian/AppData/Local/Temp/capture30630.props</jvm-options>
       </java-config>
       <network-config>
         <protocols>
@@ -210,7 +208,7 @@
         </transports>
       </network-config>
       <thread-pools>
-        <thread-pool name="admin-thread-pool" max-queue-size="256" max-thread-pool-size="50"></thread-pool>
+        <thread-pool name="admin-thread-pool" max-thread-pool-size="50" max-queue-size="256"></thread-pool>
         <thread-pool name="http-thread-pool"></thread-pool>
         <thread-pool name="thread-pool-1" max-thread-pool-size="200"></thread-pool>
       </thread-pools>
@@ -421,16 +419,5 @@
     <secure-admin-principal dn="CN=localhost-instance,OU=GlassFish,O=Oracle Corporation,L=Santa Clara,ST=California,C=US"></secure-admin-principal>
   </secure-admin>
   <clusters></clusters>
-  <applications>
-    <application context-root="/BuzzwordBingo" object-type="user" name="BuzzwordBingo" location="${com.sun.aas.instanceRootURI}/applications/BuzzwordBingo/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/BuzzwordBingo/BuzzwordBingo.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="BuzzwordBingo"></property>
-      <module name="BuzzwordBingo">
-        <engine sniffer="weld"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-  </applications>
+  <applications></applications>
 </domain>

@@ -13,6 +13,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import javax.enterprise.context.ApplicationScoped;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 @ServerEndpoint("/actions")
@@ -22,8 +25,6 @@ public class BuzzwordServer {
     private PlayerManagement playerManagement;
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
-    @Inject
-    private SessionHandler sessionHandler;
 
     public BuzzwordServer() {
         this.gameManagement = new GameManagement();
@@ -35,14 +36,22 @@ public class BuzzwordServer {
         BuzzwordServer buzzwordServer = new BuzzwordServer();
     }*/
 
+    private static Set<Session> userSessions = Collections.newSetFromMap(new ConcurrentHashMap<Session, Boolean>());
+
     @OnOpen
     public void open(Session session) {
-        sessionHandler.addSession(session);
+
+        System.out.println("Neue Verbindung aufgebaut...");
+        userSessions.add(session);
+
     }
 
     @OnClose
     public void close(Session session) {
-        sessionHandler.removeSession(session);
+
+        System.out.println("Verbindung getrennt...");
+        userSessions.remove(session);
+
     }
 
     @OnError
@@ -50,8 +59,17 @@ public class BuzzwordServer {
     }
 
     @OnMessage
-    public void handleMessage(String message, Session session) {
-        sessionHandler.handleMessage(message, session);
+    public void handleMessage(String message, Session session){
+
+        broadcast(message);
+    }
+
+    public static void broadcast(String msg) {
+        System.out.println("Broadcast Nachricht an alle:" + msg);
+        for (Session session : userSessions) {
+            session.getAsyncRemote().sendText("Re: " + msg);
+        }
+
     }
 
     private void startNewGame(int playerID, String buzzwordCategoryName){
