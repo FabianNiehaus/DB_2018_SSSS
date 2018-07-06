@@ -21,17 +21,18 @@ function sendMessage() {
     conn.send(document.getElementById("msg").value);
 }
 
+// Sends the presed tiles as a String to the Server
 function sendAction (action) {
     conn.send(action)
 }
 
 window.addEventListener("DOMContentLoaded", function() {
-    let boxes = document.querySelectorAll(".box");
+    let tables = document.querySelectorAll(".table");
 
-    Array.from(boxes, function(box) {
-        box.addEventListener("click", function() {
+    Array.from(tables, function(table) {
+        table.addEventListener("click", function() {
             alert(this.classList[1]);
-            sendAction(this.classList[1].toString());
+            sendAction(this.classList[1]);
         });
     });
 });
