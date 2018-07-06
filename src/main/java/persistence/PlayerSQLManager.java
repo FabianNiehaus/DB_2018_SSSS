@@ -45,7 +45,7 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
         return players;
     }
 
-    @Override
+
     public Player read(int id) throws SQLException {
         preStatement = connection.prepareStatement("SELECT * FROM " + table + " WHERE name=\"" + id +"\";");
         resultSet = preStatement.executeQuery();
@@ -59,13 +59,17 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
         return null;
     }
 
-    @Override
     public Boolean update(Player player) throws Exception {
+        //TODO:bisher nur score update
+        preStatement = connection.prepareStatement("UPDATE  " + table + " SET score =\'" + player.getScore() + "\' WHERE id= \'" + player.getId() + "\';" );
+        preStatement.executeUpdate();
         return null;
+
     }
 
-    @Override
     public Boolean delete(Player player) throws Exception {
-        return null;
+        preStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE id=\"" + player.getId() +"\";");
+        preStatement.executeUpdate();
+        return true;
     }
 }
