@@ -14,8 +14,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import javax.enterprise.context.ApplicationScoped;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 @ServerEndpoint("/actions")
@@ -25,19 +28,16 @@ public class BuzzwordServer {
     private PlayerManagement playerManagement;
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
-    public BuzzwordServer() throws Exception {
-        this.gameManagement = new GameManagement();
-        this.playerManagement = new PlayerManagement();
-        this.buzzwordCategoryManagement = new BuzzwordCategoryManagement();
-    }
+    private static LinkedHashMap<Session, Player> userSessions = new LinkedHashMap<>();
 
-    LinkedHashMap<Session, Player> userSessions = new LinkedHashMap<>();
+    private int playerIncrement = 0;
 
     @OnOpen
-    public void open(Session session) {
+    public void onOpen(Session session) {
         System.out.println("Neue Verbindung aufgebaut: " + session.getId());
-        session.getAsyncRemote().sendText("Welcome " + session.getId());
-        userSessions.put(session, null);
+        userSessions.put(session, new Player(playerIncrement, "Spieler" + String.valueOf(playerIncrement), "ABC", "CDE"));
+        session.getAsyncRemote().sendText("Welcome ");
+        playerIncrement++;
     }
 
     @OnClose
@@ -100,7 +100,8 @@ public class BuzzwordServer {
             }
         } catch (PlayerNotInGameException | BuzzwordNotOnGameBoardException e) {
             // TODO: Exception handling für Player-Inputs
-            e.printStackTrace();
+            session.getAsyncRemote().sendText(e.getMessage());
+            //e.printStackTrace();
         }
     }
 
