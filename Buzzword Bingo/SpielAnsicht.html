@@ -1,39 +1,14 @@
 <html>
 <!-- See this live on http://jsfiddle.net/FloydPink/KHLtw/ -->
 <head>
+       <meta charset="UTF-8" />
+        <title>Buzzword Bingo</title>
+        
+        <link rel="stylesheet" href="css/StartHintergrund.css">
+
     <title>Buzzword Bingo</title>
     <style type="text/css">
-        div {
-            text-align: center;
-        }
-
-        .bigNumberDisplay {
-            font-size: 6em;
-        }
-
-        .numbersTable {
-            font-size: 1.6em;
-        }
-
-        table {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        table, tr, td {
-            border-collapse: collapse;
-            border: solid 1px #999;
-        }
-
-        td {
-            min-width: 100px;
-            color: #fff;
-        }
-
-        td.selected {
-            color: #f00;
-        }
-
+       
     </style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>
     <script type="text/javascript">
@@ -81,6 +56,11 @@
     </script>
 </head>
 <body>
+      <header>
+          <h1 class="h1">Buzzword Bingo</h1>
+        </header>
+    <center>
+    
 <div class="container">
     <div class="bigNumberDisplay">
         <span>0</span>
@@ -88,6 +68,7 @@
     <div>
         <input id="btnGenerate" type="button" value="Generate"/>
     </div>
+</center>
 
     <br/>
 
@@ -135,11 +116,19 @@
             </tr>
             
         </table>
+        
     </div>
+<table style="float:left;width:25%;" border="1">
+  <tr>
+    <td>links</td>
+  </tr>
+</table>
 
-
-
-   
+<table style="float:right;width:25%;" border="1">
+  <tr>
+    <td>rechts</td>
+  </tr>
+</table>
 </div>
 </body>
 </html>

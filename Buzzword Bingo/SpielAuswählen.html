@@ -1,0 +1,60 @@
+<!doctype html> 
+    <html> 
+    <head> 
+        <meta charset="UTF-8" />
+        <title>Buzzword Bingo</title>
+        
+        <link rel="stylesheet" href="css/StartHintergrund.css">
+
+    </head>
+    <body>
+        
+        <header>
+          <h1 class="h1">Buzzword Bingo</h1>
+        </header>
+        <center>
+        
+        <p>Wähl dein Lieblingsthema aus</p>
+            <select name="auswahl">
+                <option value="p1">Thema a</option>
+                 <option value="p1">Thema b</option>
+                 <option value="p1">Thema c</option>
+            </select>
+
+<div class="dropdown">
+<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#home">Thema a</a>
+    <a href="#about">Thema b</a>
+    <a href="#contact">Thema c</a>
+  </div>
+</div>
+</center>
+<script>
+/*When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+</script> <br>
+        <center>
+<button type="button" ><a href="SpielAnsicht.html" class="choice">Weiter zum Spiel</a></button>
+        </center>
+</body>
+</html>
