@@ -1,7 +1,10 @@
 package data;
 
+import exceptions.PlayerNotInGameException;
+
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Game {
 
@@ -51,6 +54,12 @@ public class Game {
     public void addPlayerToGame(Player player){
         GameBoard newGameBoard = new GameBoard();
         playersAndBoards.put(player, newGameBoard);
+    }
+
+    public LinkedHashMap<Player, GameBoard> getGamePlayersAndBoards() {
+
+        return playersAndBoards;
+
     }
 
 }

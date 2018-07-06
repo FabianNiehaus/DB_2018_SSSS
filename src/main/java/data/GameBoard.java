@@ -37,13 +37,11 @@ public class GameBoard {
         }
     }
 
-    public boolean setSingleCellMarked(int[] cellPosition){
-        try{
-            cellMatrix[cellPosition[0]][cellPosition[1]].setMarked(true);
-            return true;
-        } catch (Exception e){
-            return false;
-        }
+    public Buzzword setSingleCellMarked(int[] cellPosition) throws ArrayIndexOutOfBoundsException{
+
+        cellMatrix[cellPosition[0]][cellPosition[1]].setMarked(true);
+        return cellMatrix[cellPosition[0]][cellPosition[1]].getBuzzword();
+
     }
 
     public int[] getBuzzwordPosition(Buzzword buzzword) throws BuzzwordNotOnGameBoardException{
