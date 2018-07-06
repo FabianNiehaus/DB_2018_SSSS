@@ -24,7 +24,7 @@ public class BuzzwordServer {
     private PlayerManagement playerManagement;
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
-    public BuzzwordServer() {
+    public BuzzwordServer() throws Exception {
         this.gameManagement = new GameManagement();
         this.playerManagement = new PlayerManagement();
         this.buzzwordCategoryManagement = new BuzzwordCategoryManagement();

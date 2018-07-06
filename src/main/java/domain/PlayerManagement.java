@@ -3,13 +3,24 @@ package domain;
 import data.Player;
 import exceptions.IDNotFoundException;
 import exceptions.IncorrectPasswordException;
+import persistence.GenericSQLManager;
+import persistence.PlayerSQLManager;
 
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 public class PlayerManagement {
 
+    GenericSQLManager<Player> playerSQLManager = new PlayerSQLManager();
     // Player and is Logged In
     private HashMap<Player, Boolean> players;
+
+
+    public PlayerManagement() throws Exception {
+        loadPlayers();
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());
+    }
 
     public Player createPlayer(String username, String loginname, String password, boolean isAdmin){
 
@@ -62,8 +73,11 @@ public class PlayerManagement {
         player.setAdmin(isAdmin, "i3ßfnzr984jf02");
     }
 
-    private void loadPlayers(){
-        // TODO: Spieler aus SQL laden, wenn Spieler-Management gestartet wird
+    private  void loadPlayers() throws SQLException {
+        List<Player> playerlist = playerSQLManager.readAll();
+        for(Player p : playerlist){
+            players.put(p,false);
+        }
     }
 
     public void playerLogin(String loginName, String password) throws IDNotFoundException, IncorrectPasswordException {
