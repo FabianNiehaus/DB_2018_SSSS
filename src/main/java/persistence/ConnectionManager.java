@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class ConnectionManager {
 
     private Connection connection;
-    private String url = "jdbc:mysql://localhost:3306/mondial?&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private String user = "test";
-    private String password = "Test1234";
+    private String url = "jdbc:mysql://localhost:3306/buzzwordbingodb";
+    private String user = "buzz";
+    private String password = "bingo";
 
 
     public ConnectionManager() throws Exception {

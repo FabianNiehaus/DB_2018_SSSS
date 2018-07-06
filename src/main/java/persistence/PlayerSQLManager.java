@@ -14,7 +14,7 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
     private Connection connection;
     private PreparedStatement preStatement;
     private ResultSet resultSet;
-    private String table = "Player";
+    private String table = "Spieler";
 
     public PlayerSQLManager() throws Exception {
         ConnectionManager connectionManager = new ConnectionManager();
@@ -47,7 +47,7 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
 
 
     public Player read(int id) throws SQLException {
-        preStatement = connection.prepareStatement("SELECT * FROM " + table + " WHERE name=\"" + id +"\";");
+        preStatement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id=\"" + id +"\";");
         resultSet = preStatement.executeQuery();
 
         Player p = new Player(
@@ -61,7 +61,7 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
 
     public Boolean update(Player player) throws Exception {
         //TODO:bisher nur score update
-        preStatement = connection.prepareStatement("UPDATE  " + table + " SET score =\'" + player.getScore() + "\' WHERE id= \'" + player.getId() + "\';" );
+        preStatement = connection.prepareStatement("UPDATE  " + table + " SET Punkte =\'" + player.getScore() + "\' WHERE id= \'" + player.getId() + "\';" );
         preStatement.executeUpdate();
         return null;
 
