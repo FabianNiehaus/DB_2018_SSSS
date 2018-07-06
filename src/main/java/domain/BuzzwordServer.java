@@ -36,6 +36,11 @@ public class BuzzwordServer {
 
     private static Set<Session> userSessions = Collections.newSetFromMap(new ConcurrentHashMap<Session, Boolean>());
 
+    /**
+     * Bei Öffnen einer neuen WebSocket-Verbindung, wird an alle angemeldeten Clients eine Nachricht versendet,
+     * dass einer neuer Nutzer dem Server beigetreten ist.
+     * @param session
+     */
     @OnOpen
     public void onOpen(Session session) {
 
@@ -49,6 +54,11 @@ public class BuzzwordServer {
 
     }
 
+    /**
+     * Beim Schließen einer Verbindung wird an eine Nachricht an alle angemeldeten Clients versendet,
+     * dass ein Nutzer das Spiel verlassen hat.
+     * @param session
+     */
     @OnClose
     public void onClose(Session session) {
 
@@ -72,6 +82,7 @@ public class BuzzwordServer {
         broadcast(session, message);
     }
 
+    // TODO: Differenzierung mittels veschiedener Cases, welche Action ausgeführt wurde und um welche Session es sich handelt.
     public static void broadcast(Session session, String msg) {
 
         for (Session currentSession : userSessions) {
