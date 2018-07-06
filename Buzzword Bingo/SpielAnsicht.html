@@ -7,53 +7,10 @@
         <link rel="stylesheet" href="css/StartHintergrund.css">
 
     <title>Buzzword Bingo</title>
-    <style type="text/css">
-       
-    </style>
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
+     <link rel="stylesheet" href="css/StartHintergrund.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            var bingo = {
-                selectedNumbers:[],
-                generateRandom:function () {
-                    var min = 1;
-                    var max = 10;
-                    var random = Math.floor(Math.random() * (max - min + 1)) + min;
-                    return random;
-                },
-                generateNextRandom:function () {
-                    if (bingo.selectedNumbers.length > 15) {
-                        alert("Alle Nummer sind schon gegeben");
-                        return 0;
-                    }
-                    var random = bingo.generateRandom();
-                    while ($.inArray(random, bingo.selectedNumbers) > -1) {
-                        random = bingo.generateRandom();
-                    }
-                    bingo.selectedNumbers.push(random);
-                    return random;
-                }
-            };
-            $('td').each(function () {
-                var concatClass = this.cellIndex + "" + this.parentNode.rowIndex;
-                var numberString = parseInt(concatClass, 10).toString();
-                $(this).addClass("cell" + numberString).text(numberString);
-            });
-            $('#btnGenerate').click(function () {
-                var random = bingo.generateNextRandom().toString();
-                $('.bigNumberDisplay span').text(random);
-                $('td.cell' + random).addClass('selected');
-            });
-            window.onbeforeunload = function (e) {
-                e = e || window.event;
-                var returnString = 'Bist du sicher?';
-                if (e) {
-                    e.returnValue = returnString;
-                }
-                return returnString;
-            };
-        });
-    </script>
+    <script  src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
       <header>
@@ -68,50 +25,51 @@
     <div>
         <input id="btnGenerate" type="button" value="Generate"/>
     </div>
-</center>
+    
 
     <br/>
-
+        </div>
+    </center>
     <div class="numbersTable">
         <table>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="table 11">A</td>
+                <td class="table 12">A</td>
+                <td class="table 13">A</td>
+                <td class="table 14">A</td>
+                <td class="table 15">A</td>
                 
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="table 21">B</td>
+                <td class="table 22">B</td>
+                <td class="table 23">B</td>
+                <td class="table 24">B</td>
+                <td class="table 25">B</td>
                 
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="table 31">c</td>
+                <td class="table 32">c</td>
+                <td class="table 33">c</td>
+                <td class="table 34">c</td>
+                <td class="table 35">c</td>
                 
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="table 41">D</td>
+                <td class="table 42">D</td>
+                <td class="table 43">D</td>
+                <td class="table 44">D</td>
+                <td class="table 45">D</td>
                 
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="table 51">E</td>
+                <td class="table 52">E</td>
+                <td class="table 53">E</td>
+                <td class="table 54">E</td>
+                <td class="table 55">E</td>
                 
             </tr>
             
@@ -129,6 +87,6 @@
     <td>rechts</td>
   </tr>
 </table>
-</div>
+
 </body>
 </html>
