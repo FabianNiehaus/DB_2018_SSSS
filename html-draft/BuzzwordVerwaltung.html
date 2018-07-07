@@ -1,0 +1,98 @@
+<!doctype html> 
+    <html> 
+    <head> 
+        <meta charset="UTF-8" />
+        <title>Buzzword Bingo</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <link rel="stylesheet" href="css/StartHintergrund.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type ="text/javascript" src = "js/scripts.js"></script>
+
+    </head>
+    <body>
+        
+        
+          <h1 class="h1">Buzzword Bingo</h1>
+          <ul id="buzzwordbingo">
+              </ul>
+        
+        <center>
+       <p>Wähl das Thema aus</p>
+            <select name="auswahl">
+                <option value="p1">Thema a</option>
+                 <option value="p1">Thema b</option>
+                 <option value="p1">Thema c</option>
+            </select>
+            </center>
+        <br>
+        <center>
+            
+
+          <label for="Word">Word: </label>
+	
+	<input type="text" id = "new-word" /><button id = "add">Add </button>
+    <button class = "delete">Delete</button>
+              <form method='GET' action=''>
+     <div class="popup" onclick="myFunction()"> &#8853;
+         <span class="popuptext" id="myPopup">Du hast die höchsten Anzahl von den Wörter erreicht.</span>
+                  </div>
+
+                  <script>
+    // When the user clicks on div, open the popup
+    function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+    }
+                      </script>
+ 
+
+        
+                    </form>
+                <br>           
+        <table>
+            <tr>
+                <td class="table 11">A</td>
+                <td class="table 12">A</td>
+                <td class="table 13">A</td>
+                <td class="table 14">A</td>
+                <td class="table 15">A</td>
+                
+            </tr>
+            <tr>
+                <td class="table 21">B</td>
+                <td class="table 22">B</td>
+                <td class="table 23">B</td>
+                <td class="table 24">B</td>
+                <td class="table 25">B</td>
+                
+            </tr>
+            <tr>
+                <td class="table 31">C</td>
+                <td class="table 32">C</td>
+                <td class="table 33">C</td>
+                <td class="table 34">C</td>
+                <td class="table 35">C</td>
+                
+            </tr>
+            <tr>
+                <td class="table 41">D</td>
+                <td class="table 42">D</td>
+                <td class="table 43">D</td>
+                <td class="table 44">D</td>
+                <td class="table 45">D</td>
+                
+            </tr>
+            <tr>
+                <td class="table 51">E</td>
+                <td class="table 52">E</td>
+                <td class="table 53">E</td>
+                <td class="table 54">E</td>
+                <td class="table 55">E</td>
+                
+            </tr>
+            
+        </table>
+        </center>
+   
+        </body>
+</html>
