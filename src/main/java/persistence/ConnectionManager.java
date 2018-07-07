@@ -14,6 +14,7 @@ public class ConnectionManager {
 
     public ConnectionManager() throws Exception {
         try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connection successful: " + connection);
 
