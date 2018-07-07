@@ -11804,3 +11804,24 @@ diamond operator is not supported in -source 1.5
 [2018-07-07T17:30:01.332+0200] [glassfish 5.0] [INFO] [] [] [tid: _ThreadID=35 _ThreadName=Thread-8] [timeMillis: 1530977401332] [levelValue: 800] [[
   There is no object of type Player with id -1 available!]]
 
+[2018-07-07T17:33:09.780+0200] [glassfish 5.0] [INFO] [NCLS-REST-00001] [javax.enterprise.admin.rest] [tid: _ThreadID=45 _ThreadName=admin-listener(1)] [timeMillis: 1530977589780] [levelValue: 800] [[
+  Listening to REST requests at context: /command/domain.]]
+
+[2018-07-07T17:33:10.248+0200] [glassfish 5.0] [INFO] [NCLS-CORE-00092] [javax.enterprise.system.core] [tid: _ThreadID=219 _ThreadName=Thread-34] [timeMillis: 1530977590248] [levelValue: 800] [[
+  Server shutdown initiated]]
+
+[2018-07-07T17:33:10.263+0200] [glassfish 5.0] [INFO] [NCLS-BOOTSTRAP-00028] [javax.enterprise.bootstrap] [tid: _ThreadID=219 _ThreadName=Thread-34] [timeMillis: 1530977590263] [levelValue: 800] [[
+  Unregistered com.sun.enterprise.glassfish.bootstrap.osgi.EmbeddedOSGiGlassFishImpl@48eb9836 from service registry.]]
+
+[2018-07-07T17:33:10.263+0200] [glassfish 5.0] [INFO] [] [] [tid: _ThreadID=219 _ThreadName=Thread-8] [timeMillis: 1530977590263] [levelValue: 800] [[
+  FileMonitoring shutdown]]
+
+[2018-07-07T17:33:10.372+0200] [glassfish 5.0] [INFO] [NCLS-JMX-00002] [javax.enterprise.system.jmx] [tid: _ThreadID=219 _ThreadName=Thread-34] [timeMillis: 1530977590372] [levelValue: 800] [[
+  JMXStartupService: Stopped JMXConnectorServer: null]]
+
+[2018-07-07T17:33:10.372+0200] [glassfish 5.0] [INFO] [NCLS-JMX-00001] [javax.enterprise.system.jmx] [tid: _ThreadID=219 _ThreadName=Thread-34] [timeMillis: 1530977590372] [levelValue: 800] [[
+  JMXStartupService and JMXConnectors have been shut down.]]
+
+[2018-07-07T17:33:10.809+0200] [glassfish 5.0] [INFO] [] [] [tid: _ThreadID=230 _ThreadName=Thread-8] [timeMillis: 1530977590809] [levelValue: 800] [[
+  JdbcRuntimeExtension,  getAllSystemRAResourcesAndPools = [GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool]]]
+

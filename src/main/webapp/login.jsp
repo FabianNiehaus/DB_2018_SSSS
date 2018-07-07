@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="domain.BuzzwordServer" %>
-<%@ page import="java.util.Enumeration" %>
-<%@ page import="java.util.LinkedList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <%  BuzzwordServer gameServer = (BuzzwordServer) BuzzwordServer.getInstance();
