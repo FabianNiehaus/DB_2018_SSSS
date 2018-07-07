@@ -8,18 +8,21 @@ import persistence.PlayerSQLManager;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class PlayerManagement {
 
-    GenericSQLManager<Player> playerSQLManager = new PlayerSQLManager();
+    private GenericSQLManager<Player> playerSQLManager = new PlayerSQLManager();
     // Player and is Logged In
-    private HashMap<Player, Boolean> players;
+    private LinkedHashMap<Player, Boolean> players = new LinkedHashMap<>();
 
 
-    public PlayerManagement() throws Exception {
-        loadPlayers();
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());
+    PlayerManagement() throws Exception {
+        createPlayer("TestPlayer", "test", "test", false);
+
+       /* loadPlayers();
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());*/
     }
 
     public Player createPlayer(String username, String loginname, String password, boolean isAdmin){
@@ -32,10 +35,10 @@ public class PlayerManagement {
 
         boolean addedToPersistence = false;
         // TODO: Co-Routine sinnvoller? (ggf. SQL gerade nicht verfügbar)
-        while(!addedToPersistence){
+        /*while(!addedToPersistence){
             writeSinglePlayerToPersistence(newPlayer);
         }
-
+*/
         return newPlayer;
     }
 
@@ -80,11 +83,12 @@ public class PlayerManagement {
         }
     }
 
-    public void playerLogin(String loginName, String password) throws IDNotFoundException, IncorrectPasswordException {
+    public Player playerLogin(String loginName, String password) throws IDNotFoundException, IncorrectPasswordException {
         Player playertoLogIn = findPlayerByLoginName(loginName);
 
-        if(password == playertoLogIn.getPassword()){
+        if(password.equals(playertoLogIn.getPassword())){
             players.put(playertoLogIn, true);
+            return playertoLogIn;
         } else {
             throw new IncorrectPasswordException();
         }

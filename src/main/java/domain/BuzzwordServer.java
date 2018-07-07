@@ -8,6 +8,7 @@ import exceptions.IncorrectPasswordException;
 import exceptions.PlayerNotInGameException;
 
 import javax.ejb.Singleton;
+import javax.servlet.http.HttpSession;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -46,14 +47,15 @@ public class BuzzwordServer implements Singleton {
     private PlayerManagement playerManagement;
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
-    private static LinkedHashMap<Session, Player> userSessions = new LinkedHashMap<>();
+    private static LinkedHashMap<Session, Player> gameSessions = new LinkedHashMap<>();
+    private static LinkedHashMap<HttpSession, Player> userSessions = new LinkedHashMap<>();
 
     private int playerIncrement = 0;
 
     @OnOpen
     public void onOpen(Session session) {
         System.out.println("Neue Verbindung aufgebaut: " + session.getId());
-        userSessions.put(session, new Player(playerIncrement, "Spieler" + String.valueOf(playerIncrement), "ABC", "CDE"));
+        gameSessions.put(session, new Player(playerIncrement, "Spieler" + String.valueOf(playerIncrement), "ABC", "CDE"));
         session.getAsyncRemote().sendText("Welcome ");
         playerIncrement++;
     }
@@ -62,7 +64,7 @@ public class BuzzwordServer implements Singleton {
     public void close(Session session) {
         System.out.println("Verbindung getrennt: " + session.getId());
         session.getAsyncRemote().sendText("Goodbye " + session.getId());
-        userSessions.remove(session);
+        gameSessions.remove(session);
     }
 
     @OnError
@@ -76,7 +78,7 @@ public class BuzzwordServer implements Singleton {
 
         session.getAsyncRemote().sendText(String.valueOf(rowIndex) + String.valueOf(columnIndex));
 
-        for(Map.Entry<Session, Player> entry: userSessions.entrySet()){
+        for(Map.Entry<Session, Player> entry: gameSessions.entrySet()){
             if(!entry.getKey().equals(session)){
                 int rngRowIndex = (int)(Math.random()*5);
                 int rngColumnIndex = (int)(Math.random()*5);
@@ -88,7 +90,7 @@ public class BuzzwordServer implements Singleton {
 
     public void handleMessageNew(String message, Session session){
         // Get player who made the input (current player)
-        Player currentPlayer = userSessions.get(session);
+        Player currentPlayer = gameSessions.get(session);
 
         // Coordinates of clicked cell in table
         int rowIndex = Integer.parseInt(message.substring(0,0));
@@ -104,7 +106,7 @@ public class BuzzwordServer implements Singleton {
                 Player player = entry.getKey();
 
                 // For all sessions
-                for(Map.Entry<Session, Player> userSession : userSessions.entrySet()){
+                for(Map.Entry<Session, Player> userSession : gameSessions.entrySet()){
                     // Player has a session!
                     if(userSession.getValue().equals(player)){
                         // Parse coordinates to string
@@ -123,19 +125,21 @@ public class BuzzwordServer implements Singleton {
         }
     }
 
-    private void startNewGame(int playerID, String buzzwordCategoryName){
+    private void createNewGame(int playerID, String buzzwordCategoryName){
 
         try {
             Player initialPlayer = playerManagement.findPlayerByID(playerID);
 
             Game game = gameManagement.createGame(buzzwordCategoryManagement.getBuzzwordCategory(buzzwordCategoryName));
+
+            game.addPlayerToGame(initialPlayer);
             // TODO: Weitere Erstellung eines Spiels
         } catch (IDNotFoundException e){
             // TODO: Was tun, wenn der Player nicht in der Datenbank exisitert?
         }
     }
 
-    private void joinGame(int playerID, int gameID) {
+    private void joinExistingGame(int playerID, int gameID) {
         // TODO: Soll das joinen jederzeit gehen? Oder soll das Game einen State "InProgress" haben, bei dem joinen nicht mehr möglich ist, bzw die Felder zufällig verteilt werden?
         try {
             Player player = playerManagement.findPlayerByID(playerID);
@@ -154,12 +158,35 @@ public class BuzzwordServer implements Singleton {
 
     }
 
-    public void playerLogin(String loginName, String loginPassword){
+    public int playerLogin(String loginName, String loginPassword, HttpSession httpSession){
+
         try{
-            playerManagement.playerLogin(loginName, loginPassword);
+            Player player = playerManagement.playerLogin(loginName, loginPassword);
+            userSessions.put(httpSession, player);
+            return player.getId();
         } catch (IDNotFoundException | IncorrectPasswordException e){
-            // TODO: Login failed
+            System.out.println(e.getMessage());
+            return -1;
         }
+    }
+
+    public boolean checkPlayerLoginState(String SessionID, int playerID){
+
+        try {
+            Player player = playerManagement.findPlayerByID(playerID);
+
+            for(Map.Entry<HttpSession, Player> entry : userSessions.entrySet()) {
+                if (entry.getKey().getId().equals(SessionID)){
+                    return entry.getValue().equals(player) && playerManagement.isPlayerLoggedIn(playerID);
+                }
+            }
+        } catch (IDNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override
