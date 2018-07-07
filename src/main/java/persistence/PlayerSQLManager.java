@@ -34,10 +34,10 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
         resultSet = preStatement.executeQuery();
         while (resultSet.next()) {
             Player p = new Player(
-                    Integer.parseInt(resultSet.getString(1)),
+                    Integer.parseInt(resultSet.getString(0)),
+                    resultSet.getString(1),
                     resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4)
+                    resultSet.getString(3)
                     );
 
             players.add(p);
