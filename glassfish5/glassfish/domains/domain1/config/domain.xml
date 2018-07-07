@@ -41,6 +41,7 @@
   </resources>
   <servers>
     <server config-ref="server-config" name="server">
+      <application-ref ref="BuzzwordBingo" virtual-servers="server" />
       <resource-ref ref="jdbc/__TimerPool" />
       <resource-ref ref="jdbc/__default" />
     </server>
@@ -420,6 +421,17 @@
     <secure-admin-principal dn="CN=localhost-instance,OU=GlassFish,O=Oracle Corporation,L=Santa Clara,ST=California,C=US" />
   </secure-admin>
   <clusters />
-  <applications />
+  <applications>
+    <application context-root="/BuzzwordBingo" object-type="user" name="BuzzwordBingo" location="${com.sun.aas.instanceRootURI}/applications/BuzzwordBingo/">
+      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/BuzzwordBingo/BuzzwordBingo.war" />
+      <property name="archiveType" value="war" />
+      <property name="defaultAppName" value="BuzzwordBingo" />
+      <module name="BuzzwordBingo">
+        <engine sniffer="weld" />
+        <engine sniffer="security" />
+        <engine sniffer="web" />
+      </module>
+    </application>
+  </applications>
 </domain>
 

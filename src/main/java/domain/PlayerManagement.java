@@ -19,10 +19,11 @@ public class PlayerManagement {
 
 
     PlayerManagement() throws Exception {
-        createPlayer("TestPlayer", "test", "test", false);
+//        createPlayer("TestPlayer", "test", "test", false);
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxHALLO");
 
-       /* loadPlayers();
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());*/
+        loadPlayers();
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());
     }
 
     public Player createPlayer(String username, String loginname, String password, boolean isAdmin){
