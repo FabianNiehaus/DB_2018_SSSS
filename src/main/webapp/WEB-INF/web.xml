@@ -8,12 +8,13 @@
     <servlet>
         <servlet-name>LoginSVL</servlet-name>
         <jsp-file>login.jsp</jsp-file>
+        <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet>
         <servlet-name>GameSVL</servlet-name>
         <jsp-file>game.jsp</jsp-file>
-        <load-on-startup>0</load-on-startup>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     
     <servlet-mapping>

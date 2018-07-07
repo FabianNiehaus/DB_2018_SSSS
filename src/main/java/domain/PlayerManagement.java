@@ -54,6 +54,7 @@ public class PlayerManagement {
     }
 
     public Player findPlayerByLoginName(String loginName) throws IDNotFoundException {
+
         for (HashMap.Entry<Player, Boolean> entry: players.entrySet())
         {
             Player player = entry.getKey();

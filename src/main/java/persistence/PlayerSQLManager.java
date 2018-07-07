@@ -36,8 +36,8 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
             Player p = new Player(
                     Integer.parseInt(resultSet.getString(1)),
                     resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4)
+                    resultSet.getString(2),
+                    resultSet.getString(3)
                     );
 
             players.add(p);

@@ -9,11 +9,7 @@ import exceptions.PlayerNotInGameException;
 
 import javax.ejb.Singleton;
 import javax.servlet.http.HttpSession;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.annotation.Annotation;
@@ -31,6 +27,17 @@ public class BuzzwordServer implements Singleton {
             playerManagement = new PlayerManagement();
             gameManagement = new GameManagement();
             buzzwordCategoryManagement = new BuzzwordCategoryManagement();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    private void checkManagementStates(){
+        try {
+            if(playerManagement == null) playerManagement = new PlayerManagement();
+            if(gameManagement == null) gameManagement = new GameManagement();
+            if(buzzwordCategoryManagement == null) buzzwordCategoryManagement = new BuzzwordCategoryManagement();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,14 +57,17 @@ public class BuzzwordServer implements Singleton {
     private static LinkedHashMap<Session, Player> gameSessions = new LinkedHashMap<>();
     private static LinkedHashMap<HttpSession, Player> userSessions = new LinkedHashMap<>();
 
-    private int playerIncrement = 0;
-
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(Session session, EndpointConfig config) {
+        checkManagementStates();
+
         System.out.println("Neue Verbindung aufgebaut: " + session.getId());
-        gameSessions.put(session, new Player(playerIncrement, "Spieler" + String.valueOf(playerIncrement), "ABC", "CDE"));
-        session.getAsyncRemote().sendText("Welcome ");
-        playerIncrement++;
+        HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+
+        Player player = userSessions.get(httpSession);
+
+        gameSessions.put(session, player);
+        session.getAsyncRemote().sendText("Welcome " + player.getUsername());
     }
 
     @OnClose
@@ -160,6 +170,8 @@ public class BuzzwordServer implements Singleton {
 
     public int playerLogin(String loginName, String loginPassword, HttpSession httpSession){
 
+        checkManagementStates();
+
         try{
             Player player = playerManagement.playerLogin(loginName, loginPassword);
             userSessions.put(httpSession, player);
@@ -171,6 +183,8 @@ public class BuzzwordServer implements Singleton {
     }
 
     public boolean checkPlayerLoginState(String SessionID, int playerID){
+
+        checkManagementStates();
 
         try {
             Player player = playerManagement.findPlayerByID(playerID);
