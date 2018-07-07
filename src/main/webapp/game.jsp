@@ -4,7 +4,9 @@
     <meta charset="UTF-8"/>
     <title>Buzzword Bingo</title>
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <script src="js/main.js" type="text/javascript"></script>
 </head>
 
@@ -16,10 +18,6 @@
 
 <div class="container">
 
-    <br/>
-    <textarea cols="50" rows="10" disabled id="out"></textarea>
-
-    <br/>
     <div class="playfield">
 
         <table class="table-grid">
@@ -46,49 +44,51 @@
                 </table>
             </tr>
             <tr>
+                <td>
                 <table class="middle" style="width:50%">
 
                     <tr>
-                        <td class="table 11">A</td>
-                        <td class="table 12">A</td>
-                        <td class="table 13">A</td>
-                        <td class="table 14">A</td>
-                        <td class="table 15">A</td>
+                        <td class="word 11">A</td>
+                        <td class="word 12">A</td>
+                        <td class="word 13">A</td>
+                        <td class="word 14">A</td>
+                        <td class="word 15">A</td>
 
                     </tr>
                     <tr>
-                        <td class="table 21">B</td>
-                        <td class="table 22">B</td>
-                        <td class="table 23">B</td>
-                        <td class="table 24">B</td>
-                        <td class="table 25">B</td>
+                        <td class="word 21">B</td>
+                        <td class="word 22">B</td>
+                        <td class="word 23">B</td>
+                        <td class="word 24">B</td>
+                        <td class="word 25">B</td>
 
                     </tr>
                     <tr>
-                        <td class="table 31">c</td>
-                        <td class="table 32">c</td>
-                        <td class="table 33">c</td>
-                        <td class="table 34">c</td>
-                        <td class="table 35">c</td>
+                        <td class="word 31">C</td>
+                        <td class="word 32">C</td>
+                        <td class="spacer"></td>
+                        <td class="word 34">C</td>
+                        <td class="word 35">C</td>
 
                     </tr>
                     <tr>
-                        <td class="table 41">D</td>
-                        <td class="table 42">D</td>
-                        <td class="table 43">D</td>
-                        <td class="table 44">D</td>
-                        <td class="table 45">D</td>
+                        <td class="word 41">D</td>
+                        <td class="word 42">D</td>
+                        <td class="word 43">D</td>
+                        <td class="word 44">D</td>
+                        <td class="word 45">D</td>
 
                     </tr>
                     <tr>
-                        <td class="table 51">E</td>
-                        <td class="table 52">E</td>
-                        <td class="table 53">E</td>
-                        <td class="table 54">E</td>
-                        <td class="table 55">E</td>
+                        <td class="word 51">E</td>
+                        <td class="word 52">E</td>
+                        <td class="word 53">E</td>
+                        <td class="word 54">E</td>
+                        <td class="word 55">E</td>
 
                     </tr>
                 </table>
+                </td>
             </tr>
 
             <tr>
