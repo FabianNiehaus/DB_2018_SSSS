@@ -3,15 +3,19 @@
     <head> 
         <meta charset="UTF-8" />
         <title>Buzzword Bingo</title>
-        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
         <link rel="stylesheet" href="css/StartHintergrund.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type ="text/javascript" src = "js/scripts.js"></script>
 
     </head>
     <body>
         
-        <header>
+        
           <h1 class="h1">Buzzword Bingo</h1>
-        </header>
+          <ul id="buzzwordbingo">
+              </ul>
+        
         <center>
        <p>Wähl das Thema aus</p>
             <select name="auswahl">
@@ -22,14 +26,13 @@
             </center>
         <br>
         <center>
-            <form method='GET' action=''>
-            <input type='submit' value=' &#8855;'>
+            
 
           <label for="Word">Word: </label>
-	<input type="text" id="Word" name="Word">
 	
+	<input type="text" id = "new-word" /><button id = "add">Add </button>
+    <button class = "delete">Delete</button>
               <form method='GET' action=''>
-            <input type='submit' value=' &#8853;'>
      <div class="popup" onclick="myFunction()"> &#8853;
          <span class="popuptext" id="myPopup">Du hast die höchsten Anzahl von den Wörter erreicht.</span>
                   </div>
@@ -40,12 +43,12 @@
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
     }
-</script>
+                      </script>
+ 
 
         
                     </form>
-                <br>
-                
+                <br>           
         <table>
             <tr>
                 <td class="table 11">A</td>
