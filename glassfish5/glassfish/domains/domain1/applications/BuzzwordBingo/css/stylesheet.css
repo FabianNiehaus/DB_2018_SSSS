@@ -1,11 +1,11 @@
-*{
+* {
     font-family: georgia;
 }
 
-html{
+html {
 
     /*background-color: darkgoldenrod;*/
-//background-image: image("Assets/Hintergrund.jpg");
+/ / background-image: image("Assets/Hintergrund.jpg");
 
     /*background-image: image('Assets/Hintergrund.jpg');*/
     background-position: center;
@@ -24,7 +24,6 @@ h1 {
     text-shadow: 2px 2px #2A120A;
 }
 
-
 .button {
     background-color: darkgoldenrod;
     /*position: center;*/
@@ -38,7 +37,7 @@ h1 {
     border: none;
     padding: 16px 32px;
     margin: 4px 2px;
-    display:inline-block;
+    display: inline-block;
 }
 
 a.button:hover, a.button:focus, a.button:active {
@@ -56,6 +55,7 @@ a.button:hover, a.button:focus, a.button:active {
     border: none;
     cursor: pointer;
 }
+
 .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
 }
@@ -71,7 +71,7 @@ a.button:hover, a.button:focus, a.button:active {
     background-color: #f1f1f1;
     min-width: 160px;
     overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -82,10 +82,13 @@ a.button:hover, a.button:focus, a.button:active {
     display: block;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {
+    background-color: #ddd;
+}
 
-
-.show {display: block;}
+.show {
+    display: block;
+}
 
 .table {
     background-color: #444444;
@@ -100,6 +103,7 @@ a.button:hover, a.button:focus, a.button:active {
 }
 
 div {
+    display: table-cell;
     text-align: center;
 }
 
