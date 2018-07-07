@@ -1,3 +1,4 @@
+<%@ page import="domain.BuzzwordServer" %>
 <html>
 <!-- See this live on http://jsfiddle.net/FloydPink/KHLtw/ -->
 <head>
@@ -6,6 +7,7 @@
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>
     <script  src="js/main.js" type="text/javascript"></script>
+
 </head>
 <body>
 <header>
