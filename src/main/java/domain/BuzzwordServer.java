@@ -7,6 +7,7 @@ import exceptions.IDNotFoundException;
 import exceptions.IncorrectPasswordException;
 import exceptions.PlayerNotInGameException;
 
+import javax.ejb.Singleton;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -14,15 +15,32 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import javax.enterprise.context.ApplicationScoped;
-import java.util.Collections;
+import java.lang.annotation.Annotation;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 @ServerEndpoint("/actions")
-public class BuzzwordServer {
+public class BuzzwordServer implements Singleton {
+
+    private static Singleton serverInstance;
+
+    private BuzzwordServer(){
+        try {
+            playerManagement = new PlayerManagement();
+            gameManagement = new GameManagement();
+            buzzwordCategoryManagement = new BuzzwordCategoryManagement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Singleton getInstance(){
+        if(BuzzwordServer.serverInstance == null){
+            BuzzwordServer.serverInstance = new BuzzwordServer();
+        }
+        return BuzzwordServer.serverInstance;
+    }
 
     private GameManagement gameManagement;
     private PlayerManagement playerManagement;
@@ -144,4 +162,23 @@ public class BuzzwordServer {
         }
     }
 
+    @Override
+    public String name() {
+        return null;
+    }
+
+    @Override
+    public String mappedName() {
+        return null;
+    }
+
+    @Override
+    public String description() {
+        return "Der BuzzwordServer!";
+    }
+
+    @Override
+    public Class<? extends Annotation> annotationType() {
+        return null;
+    }
 }
