@@ -1,5 +1,5 @@
 * {
-    font-family: georgia;
+    font-family: sans-serif;
 }
 
 /*
@@ -10,8 +10,6 @@ html {
 
     /*background-color: darkgoldenrod;*/
 / / background-image: image("Assets/Hintergrund.jpg");
-
-    /*background-image: image('Assets/Hintergrund.jpg');*/
     background-position: center;
     background-repeat: no-repeat;
     margin-top: 19.5%;
@@ -36,50 +34,39 @@ div {
 table {
     margin-left: auto;
     margin-right: auto;
+    display: inline-block;
+    text-align: center;
 }
 
-table, tr, td {
-    border-collapse: collapse;
-    border: solid 1px #999;
+tr, td {
+    margin: .25em;
+    display: inline-block;
 }
 
 td {
     min-width: 100px;
     color: #000000;
 }
+
 button {
-    padding: 1em;
-    border: .5em;
+    background-color: silver;
+    width: 100%;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 1em;
+    color: #fdf5e6;
+    text-decoration: none;
+    border: .15em solid black;
+    border-radius: 25px;
+    padding: .5em;
+    margin: .2em;
 }
 
 /*
     Settings for the game table
  */
 
-.button {
-    background-color: darkgoldenrod;
-    /*position: center;*/
-    margin-top: -5%;
-    margin-left: -3%;
-    font-family: trajan pro;
-    text-align: center;
-    font-size: 16px;
-    color: #fdf5e6;
-    text-decoration: none;
-    border: none;
-    padding: 16px 32px;
-    margin: 4px 2px;
-    display: inline-block;
-}
-
-a.button:hover, a.button:focus, a.button:active {
-    margin-top: -5%;
-    margin-left: -3%;
-
-    background-color: #D4AF37;
-}
-
-.table {
+.word {
     background-color: #444444;
     color: #ffffff;
     border-radius: 5px;
@@ -88,13 +75,24 @@ a.button:hover, a.button:focus, a.button:active {
     cursor: pointer;
     display: inline-block;
     justify-content: center;
-    align-items: center;
+    text-align: center;
+}
+.spacer {
+    visibility: hidden;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+    cursor: pointer;
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
 }
 
 .left {
+    align-items: center;
     top: 0px;
     float:left;
-    width:25%;
+    width:10%;
 }
 
 .right {
@@ -106,8 +104,16 @@ a.button:hover, a.button:focus, a.button:active {
 .middle {
     top: 0px;
     display: inline-block;
+    margin: .2em;
+    padding: .5em;
 }
 
 .info {
 
+}
+
+.highlight {
+    background-color: green;
+    font-weight: bold;
+    text-decoration: line-through;
 }
