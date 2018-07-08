@@ -37,10 +37,10 @@
             playerID = gameServer.playerLogin(username, password, session);
 
             if(playerID > -1) {
+                session.setAttribute(userKey, playerID);
                 request.changeSessionId();
                 RequestDispatcher rd = request.getRequestDispatcher("/mainmenu");
                 rd.forward(request,response);
-                session.setAttribute(userKey, playerID);
             } else {
                 %>
                 <script>alert("Nutzername oder Passwort falsch!")</script>

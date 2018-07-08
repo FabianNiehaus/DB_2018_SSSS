@@ -40,11 +40,8 @@ public class Player {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin, String pasword) {
-        String functionPassword = "i3ßfnzr984jf02!";
-        if (password.equals(functionPassword)) {
-            isAdmin = admin;
-        }
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
 }

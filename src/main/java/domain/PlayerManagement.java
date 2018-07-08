@@ -81,7 +81,7 @@ public class PlayerManagement {
     }
 
     private void setIsAdmin(Player player, boolean isAdmin){
-        player.setAdmin(isAdmin, "i3ßfnzr984jf02");
+        player.setAdmin(isAdmin);
     }
 
     private  void loadPlayers() throws Exception {

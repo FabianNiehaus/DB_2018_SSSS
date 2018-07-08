@@ -11,50 +11,7 @@
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 
-    <style type="text/css">
-
-        content {
-            max-width: 75%;
-            margin: auto;
-        }
-
-        #feedback {
-            font-size: 1.4em;
-        }
-
-        span {
-            text-decoration: underline;
-            background-color: #b6be98;
-        }
-
-        #selectable .ui-selecting {
-            background: white;
-        }
-
-        #selectable .ui-selected {
-            background: #91b547;
-            color: white;
-        }
-
-        #selectable {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 60%;
-        }
-
-        #selectable li {
-            margin: 3px;
-            padding: 0.4em;
-            font-size: 1.4em;
-            height: 18px;
-        }
-
-        .ui-widget-content {
-            width: 20%;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/management-page.css"/>
 
     <script type="text/javascript">
         $(function () {

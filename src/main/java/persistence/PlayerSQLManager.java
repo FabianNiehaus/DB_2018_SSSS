@@ -39,6 +39,7 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
                     resultSet.getString(3)
                     );
 
+            p.setAdmin(resultSet.getBoolean(4));
             players.add(p);
             System.out.println(p.toString());
 
