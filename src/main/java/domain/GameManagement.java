@@ -2,6 +2,7 @@ package domain;
 
 import data.*;
 import exceptions.BuzzwordNotOnGameBoardException;
+import exceptions.GameInWrongStateException;
 import exceptions.IDNotFoundException;
 import exceptions.PlayerNotInGameException;
 
@@ -38,15 +39,17 @@ public class GameManagement {
         throw new IDNotFoundException("Game", id);
     }
 
-    public LinkedHashMap<Player, int[]> handlePlayerInput(Player player, int[] coordinates) throws PlayerNotInGameException, BuzzwordNotOnGameBoardException {
+    public LinkedHashMap<Player, int[]> handlePlayerInput(Player player, int[] coordinates) throws PlayerNotInGameException, BuzzwordNotOnGameBoardException, GameInWrongStateException {
+        Game game = null;
         LinkedHashMap<Player, GameBoard> currentGamePlayersAndBoards = null;
         LinkedHashMap<Player, int[]> coordinatesAndPlayers = new LinkedHashMap<>();
 
         // Get game participants and boards for current player
-        for(Game game: games){
-            LinkedHashMap<Player, GameBoard> currentGameToCheck = game.getGamePlayersAndBoards();
+        for(Game currentGame: games){
+            LinkedHashMap<Player, GameBoard> currentGameToCheck = currentGame.getGamePlayersAndBoards();
             if(currentGameToCheck.containsKey(player)){
                 currentGamePlayersAndBoards = currentGameToCheck;
+                game = currentGame;
             }
         }
 
@@ -55,32 +58,37 @@ public class GameManagement {
             throw new PlayerNotInGameException(player.getId());
         }
 
-        // Get game board of current player
-        GameBoard currentPlayerBoard = currentGamePlayersAndBoards.get(player);
+        if(game.getGameState() == GameState.ACTIVE){
+            // Get game board of current player
+            GameBoard currentPlayerBoard = currentGamePlayersAndBoards.get(player);
 
-        // Set cell at coordinates as marked and get Buzzword at marked coordinates
-        Buzzword buzzword = currentPlayerBoard.setSingleCellMarked(coordinates);
+            // Set cell at coordinates as marked and get Buzzword at marked coordinates
+            Buzzword buzzword = currentPlayerBoard.setSingleCellMarked(coordinates);
 
-        // Add player and coordinates to return map
-        coordinatesAndPlayers.put(player, coordinates);
+            // Add player and coordinates to return map
+            coordinatesAndPlayers.put(player, coordinates);
 
-        // Circle through all other players in current game
-        for(Map.Entry<Player, GameBoard> entry :currentGamePlayersAndBoards.entrySet()){
-            // Make sure to not add the current player twice
-            if(!entry.getKey().equals(player)){
-                // Get game board of other player
-                GameBoard gameBoard = entry.getValue();
+            // Circle through all other players in current game
+            for(Map.Entry<Player, GameBoard> entry :currentGamePlayersAndBoards.entrySet()){
+                // Make sure to not add the current player twice
+                if(!entry.getKey().equals(player)){
+                    // Get game board of other player
+                    GameBoard gameBoard = entry.getValue();
+                    Player currentPlayer = entry.getKey();
 
-                // Get coordinates of the buzzword on the players board
-                int[] buzzwordPosition = gameBoard.getBuzzwordPosition(buzzword);
-                // Set cell at coordinates as marked
-                gameBoard.setSingleCellMarked(buzzwordPosition);
-                // Add player and coordinates to return map
-                coordinatesAndPlayers.put(player, buzzwordPosition);
+                    // Get coordinates of the buzzword on the players board
+                    int[] buzzwordPosition = gameBoard.getBuzzwordPosition(buzzword);
+                    // Set cell at coordinates as marked
+                    gameBoard.setSingleCellMarked(buzzwordPosition);
+                    // Add player and coordinates to return map
+                    coordinatesAndPlayers.put(currentPlayer, buzzwordPosition);
+                }
             }
+
+            return coordinatesAndPlayers;
         }
 
-        return coordinatesAndPlayers;
+        throw new GameInWrongStateException(game.getGameState(), GameState.ACTIVE);
     }
 
     public void changeGameState(Game game, GameState gameState) {

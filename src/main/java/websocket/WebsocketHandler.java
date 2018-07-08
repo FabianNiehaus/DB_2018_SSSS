@@ -1,12 +1,11 @@
 package websocket;
 
-import data.Buzzword;
 import data.Game;
 import data.GameState;
 import data.Player;
 import domain.BuzzwordServer;
 import exceptions.BuzzwordNotOnGameBoardException;
-import exceptions.IDNotFoundException;
+import exceptions.GameInWrongStateException;
 import exceptions.PlayerNotInGameException;
 import http.GetHttpSessionConfigurator;
 
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 @ApplicationScoped
@@ -44,7 +44,6 @@ public class WebsocketHandler {
     @OnClose
     public void close(Session session) {
         System.out.println("Verbindung getrennt: " + session.getId());
-        session.getAsyncRemote().sendText("Goodbye " + session.getId());
         gameServer.removeGameSession(session);
     }
 
@@ -73,19 +72,15 @@ public class WebsocketHandler {
         // Get player who made the input (current player)
         Player currentPlayer = gameServer.getGameSession(session);
 
-        if(message.equals("gameStarted")){
-            try {
-                Game currentGame = gameServer.getPlayerInGame(currentPlayer);
-                if(gameServer.isPlayerAdminInGame(currentGame, currentPlayer)){
-
-                    gameServer.changeGameState(currentGame, GameState.ACTIVE);
-                } else {
-                    session.getAsyncRemote().sendText("Fehler: Spieler ist kein Admin!");
-                }
-            } catch (PlayerNotInGameException e) {
-                e.printStackTrace();
+        // TODO: Input validation
+        /*LinkedList<String> validMessages = new LinkedList<>();
+        for(int i = 1; i < 6; i++){
+            for(int j = 1; j < 6; j++){
+                if(i != 3 && j != 3) validMessages.add(String.valueOf(i) + String.valueOf(j));
             }
         }
+
+        if(validMessages.contains(message));*/
 
         // Coordinates of clicked cell in table
         int rowIndex =  Character.getNumericValue(message.charAt(0));
@@ -117,6 +112,8 @@ public class WebsocketHandler {
             // TODO: Exception handling für Player-Inputs
             session.getAsyncRemote().sendText(e.getMessage());
             //e.printStackTrace();
+        } catch (GameInWrongStateException e) {
+            session.getAsyncRemote().sendText(e.getMessage());
         }
     }
 
