@@ -2,6 +2,8 @@
 var conn;
 var classHighlight = 'highlight';
 
+var gameStarted = false;
+
 //Methods
 
 function connect() {
@@ -26,13 +28,18 @@ function disconnect() {
     document.getElementById("connect").removeAttribute("disabled");
 }
 
-function sendMessage() {
+/*function sendMessage() {
     conn.send(document.getElementById("msg").value);
-}
+}*/
 
 // Sends the presed tiles as a String to the Server
 function sendAction(action) {
     conn.send(action)
+}
+
+function startGame(){
+    gameStarted = true;
+    conn.send("gameStarted");
 }
 
 window.addEventListener("DOMContentLoaded", function () {

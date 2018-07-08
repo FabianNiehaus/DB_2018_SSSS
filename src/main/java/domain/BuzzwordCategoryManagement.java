@@ -8,7 +8,15 @@ import java.util.LinkedList;
 
 public class BuzzwordCategoryManagement {
 
-    LinkedList<BuzzwordCategory> buzzwordCategories;
+    public LinkedList<String> getBuzzwordCategorieNames() {
+        LinkedList<String> categoryNames = new LinkedList<>();
+        for(BuzzwordCategory buzzwordCategory : buzzwordCategories){
+            categoryNames.add(buzzwordCategory.getName());
+        }
+        return  categoryNames;
+    }
+
+    private LinkedList<BuzzwordCategory> buzzwordCategories;
 
 
     public BuzzwordCategoryManagement() {

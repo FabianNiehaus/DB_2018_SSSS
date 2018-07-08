@@ -13,20 +13,19 @@ public class GameManagement {
 
     private LinkedList<Game> games;
 
-    public Game createGame(BuzzwordCategory buzzwordCategory){
+    public Game createGame(Player admin, BuzzwordCategory buzzwordCategory){
 
         int id = getNextAvailabeGameID();
 
-        Game newGame = new Game(id, true, buzzwordCategory);
+        Game newGame = new Game(admin, id, buzzwordCategory);
 
         games.add(newGame);
 
         boolean addedToPersistence = false;
         // TODO: Co-Routine sinnvoller? (ggf. SQL gerade nicht verfügbar)
-        while(!addedToPersistence){
+        /*while(!addedToPersistence){
             writeSingleGameToPersistence(newGame);
-        }
-
+        }*/
         return newGame;
     }
 
@@ -82,6 +81,27 @@ public class GameManagement {
         }
 
         return coordinatesAndPlayers;
+    }
+
+    public void changeGameState(Game game, GameState gameState) {
+        game.setGameState(gameState);
+    }
+
+    public Game getPlayerInGame(Player player) throws PlayerNotInGameException {
+        // Get game participants and boards for current player
+        for(Game game: games){
+            LinkedHashMap<Player, GameBoard> currentGameToCheck = game.getGamePlayersAndBoards();
+            if(currentGameToCheck.containsKey(player)){
+                return game;
+            }
+        }
+
+        throw new PlayerNotInGameException(player.getId());
+
+    }
+
+    public boolean isPlayerAdminInGame(Game game, Player player){
+        return game.getAdmin() == player;
     }
 
     private boolean writeSingleGameToPersistence(Game game){

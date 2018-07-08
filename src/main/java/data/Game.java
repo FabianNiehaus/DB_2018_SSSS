@@ -8,12 +8,20 @@ import java.util.Map;
 
 public class Game {
 
-    public Game(int id, boolean isActive, BuzzwordCategory buzzwordCategory) {
+    public Game(Player admin, int id, BuzzwordCategory buzzwordCategory) {
+        this.admin = admin;
         this.id = id;
-        this.isActive = isActive;
         this.buzzwordCategory = buzzwordCategory;
-        this.buzzwords = this.buzzwordCategory.getBuzzwords();
+        this.gameState = GameState.OPEN;
     }
+
+    private GameState gameState;
+
+    public Player getAdmin() {
+        return admin;
+    }
+
+    private Player admin;
 
     private int id;
 
@@ -62,4 +70,11 @@ public class Game {
 
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
 }

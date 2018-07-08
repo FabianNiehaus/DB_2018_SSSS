@@ -7,10 +7,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <script src="js/main.js" type="text/javascript"></script>
+    <script src="js/game.js" type="text/javascript"></script>
 </head>
 
 <body>
+
+<script>connect()</script>
 
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
@@ -26,18 +28,18 @@
                     <tr>
                         <td>
 
-                            <button type="submit" onclick="connect()" style="color: green" id="connect">Verbindung
+                            <%--<button type="button" onclick="connect()" style="color: green" id="connect">Verbindung
                                 aufbauen
                             </button>
                             </br>
-                            <button type="submit" onclick="disconnect()" style="color: red" id="disconnect" disabled>
+                            <button type="button" onclick="disconnect()" style="color: red" id="disconnect" disabled>
                                 Verbindung trennen
                             </button>
+                            </br>--%>
+                            <button type="button" onclick="startGame()" style="color: black" id="start">Spiel starten</button>
                             </br>
-                            <button type="submit" onclick="" style="color: black" id="start">Spiel starten</button>
-                            </br>
-                            <button type="submit" onclick="" style="color: black" id="quit" disabled>Spiel verlassen
-                            </button>
+                            <%--<button type="button" onclick="" style="color: black" id="quit" disabled>Spiel verlassen
+                            </button>--%>
 
                         </td>
                     </tr>

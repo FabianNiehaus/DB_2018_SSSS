@@ -1,6 +1,7 @@
 package domain;
 
 import data.Game;
+import data.GameState;
 import data.Player;
 import exceptions.BuzzwordNotOnGameBoardException;
 import exceptions.IDNotFoundException;
@@ -15,6 +16,7 @@ import javax.websocket.server.ServerEndpoint;
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.annotation.Annotation;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 @ApplicationScoped
@@ -82,7 +84,7 @@ public class BuzzwordServer implements Singleton {
     public void onError(Throwable error) {
     }
 
-    public void handleMessageOLD(String message, Session session) {
+    /*public void handleMessageOLD(String message, Session session) {
         int rowIndex = Integer.parseInt(message.substring(0,0));
         int columnIndex = Integer.parseInt(message.substring(1,1));
 
@@ -96,12 +98,26 @@ public class BuzzwordServer implements Singleton {
                 session.getAsyncRemote().sendText(String.valueOf(rngRowIndex) + String.valueOf(rngColumnIndex));
             }
         }
-    }
+    }*/
 
     @OnMessage
     public void handleMessage(String message, Session session){
         // Get player who made the input (current player)
         Player currentPlayer = gameSessions.get(session);
+
+        if(message.equals("gameStarted")){
+            try {
+                Game currentGame = gameManagement.getPlayerInGame(currentPlayer);
+                if(gameManagement.isPlayerAdminInGame(currentGame, currentPlayer)){
+
+                    gameManagement.changeGameState(currentGame, GameState.ACTIVE);
+                } else {
+                    session.getAsyncRemote().sendText("Fehler: Spieler ist kein Admin!");
+                }
+            } catch (PlayerNotInGameException e) {
+                e.printStackTrace();
+            }
+        }
 
         // Coordinates of clicked cell in table
         int rowIndex =  Character.getNumericValue(message.charAt(0));
@@ -136,12 +152,12 @@ public class BuzzwordServer implements Singleton {
         }
     }
 
-    private void createNewGame(int playerID, String buzzwordCategoryName){
+    public void createNewGame(int playerID, String buzzwordCategoryName){
 
         try {
             Player initialPlayer = playerManagement.findPlayerByID(playerID);
 
-            Game game = gameManagement.createGame(buzzwordCategoryManagement.getBuzzwordCategory(buzzwordCategoryName));
+            Game game = gameManagement.createGame(initialPlayer, buzzwordCategoryManagement.getBuzzwordCategory(buzzwordCategoryName));
 
             game.addPlayerToGame(initialPlayer);
             // TODO: Weitere Erstellung eines Spiels
@@ -151,7 +167,6 @@ public class BuzzwordServer implements Singleton {
     }
 
     private void joinExistingGame(int playerID, int gameID) {
-        // TODO: Soll das joinen jederzeit gehen? Oder soll das Game einen State "InProgress" haben, bei dem joinen nicht mehr möglich ist, bzw die Felder zufällig verteilt werden?
         try {
             Player player = playerManagement.findPlayerByID(playerID);
 
@@ -163,10 +178,6 @@ public class BuzzwordServer implements Singleton {
         } catch (IDNotFoundException e){
             // TODO: Was tun, wenn der Player oder das Spiel nicht in der Datenbank exisitert?
         }
-    }
-
-    private void changeGameState(int gameID, int playerID) {
-
     }
 
     public int playerLogin(String loginName, String loginPassword, HttpSession httpSession){
@@ -202,6 +213,33 @@ public class BuzzwordServer implements Singleton {
         }
 
         return false;
+    }
+
+    public boolean checkPlayerInGameState(int playerID){
+        try {
+            Player player = playerManagement.findPlayerByID(playerID);
+            gameManagement.getPlayerInGame(player);
+            return true;
+        } catch (PlayerNotInGameException e) {
+            return false;
+        } catch (IDNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean checkPlayerAdminState(int playerID){
+        try {
+            Player player = playerManagement.findPlayerByID(playerID);
+            return player.isAdmin();
+        } catch (IDNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public LinkedList<String> getBuzzwordCategoryNames () {
+        return buzzwordCategoryManagement.getBuzzwordCategorieNames();
     }
 
     @Override
