@@ -49,14 +49,25 @@ public class WordSQLManager {
     }
 
     public BuzzwordCategory readBuzzwordCategory(int name) throws SQLException {
-        return null;
+        BuzzwordCategory bc = null;
+        preStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
+        resultSet = preStatement.executeQuery();
+        while (resultSet.next()) {
+            bc = new BuzzwordCategory(resultSet.getString(1), new LinkedList<Buzzword>());
+            if (resultSet.getString(1) != bc.getName()) {
+                bc.addWord(new Buzzword(resultSet.getString(0)));
+            }
+        }
+        return  bc;
     }
 
     public void createBuzzword(Buzzword buzzword, BuzzwordCategory buzzwordCategory) throws SQLException {
-
+        preStatement = connection.prepareStatement("INSERT INTO " + table + "(Name,Kategorie) VALUES(\'" + buzzword.getBuzzword() + "\',\'" + buzzwordCategory.getName() + "\');");
+        preStatement.executeUpdate();
     }
 
-    public Boolean deleteBuzzword(Buzzword buzzword, BuzzwordCategory buzzwordCategory) throws Exception {
-        return null;
+    public void deleteBuzzword(Buzzword buzzword, BuzzwordCategory buzzwordCategory) throws Exception {
+        preStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE Name=\"" + buzzword.getBuzzword() +"\";");
+        preStatement.executeUpdate();
     }
 }
