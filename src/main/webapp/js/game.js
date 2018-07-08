@@ -1,6 +1,7 @@
 // Variables
 var conn;
 var classHighlight = 'highlight';
+var arr = ["list", "items", "here"];
 
 var gameStarted = false;
 
@@ -61,3 +62,5 @@ window.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+

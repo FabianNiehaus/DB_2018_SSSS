@@ -23,6 +23,7 @@ h1 {
     opacity: 500;
     margin-top: -15%;
     margin-left: -3%;
+    justify-content: center;
     text-shadow: 2px 2px #2A120A;
 }
 
@@ -82,7 +83,6 @@ button {
     border-radius: 5px;
     padding: 20px;
     font-size: 150%;
-    cursor: pointer;
     display: inline-block;
     justify-content: center;
     text-align: center;
