@@ -58,6 +58,11 @@
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
     <%@include file="common/imports.jsp"%>
     <script src="js/game.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $('#middle').getChildren().prop("disabled", true);
+    </script>
+
 </head>
 
 <body>
