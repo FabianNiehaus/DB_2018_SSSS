@@ -6,6 +6,7 @@ import exceptions.BuzzwordNotOnGameBoardException;
 import exceptions.IDNotFoundException;
 import exceptions.IncorrectPasswordException;
 import exceptions.PlayerNotInGameException;
+import http.GetHttpSessionConfigurator;
 
 import javax.ejb.Singleton;
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ApplicationScoped
-@ServerEndpoint("/actions")
+@ServerEndpoint(value = "/actions", configurator = GetHttpSessionConfigurator.class)
 public class BuzzwordServer implements Singleton {
 
     private static Singleton serverInstance;
@@ -81,8 +82,7 @@ public class BuzzwordServer implements Singleton {
     public void onError(Throwable error) {
     }
 
-    @OnMessage
-    public void handleMessage(String message, Session session) {
+    public void handleMessageOLD(String message, Session session) {
         int rowIndex = Integer.parseInt(message.substring(0,0));
         int columnIndex = Integer.parseInt(message.substring(1,1));
 
@@ -98,13 +98,14 @@ public class BuzzwordServer implements Singleton {
         }
     }
 
-    public void handleMessageNew(String message, Session session){
+    @OnMessage
+    public void handleMessage(String message, Session session){
         // Get player who made the input (current player)
         Player currentPlayer = gameSessions.get(session);
 
         // Coordinates of clicked cell in table
-        int rowIndex = Integer.parseInt(message.substring(0,0));
-        int columnIndex = Integer.parseInt(message.substring(1,1));
+        int rowIndex =  Character.getNumericValue(message.charAt(0));
+        int columnIndex =  Character.getNumericValue(message.charAt(1));
         int coordinates[] = new int[] {rowIndex, columnIndex};
 
         try {

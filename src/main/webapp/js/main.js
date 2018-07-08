@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
         word.addEventListener("click", function () {
             //alert(this.classList[1]);
-            //sendAction(this.classList[1]);
+            sendAction(this.classList[1]);
         });
     });
 });
