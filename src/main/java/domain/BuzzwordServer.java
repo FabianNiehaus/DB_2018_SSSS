@@ -3,10 +3,7 @@ package domain;
 import data.Game;
 import data.GameState;
 import data.Player;
-import exceptions.BuzzwordNotOnGameBoardException;
-import exceptions.IDNotFoundException;
-import exceptions.IncorrectPasswordException;
-import exceptions.PlayerNotInGameException;
+import exceptions.*;
 
 import javax.ejb.Singleton;
 import javax.servlet.http.HttpSession;
@@ -47,8 +44,8 @@ public class BuzzwordServer implements Singleton {
     private PlayerManagement playerManagement;
     private BuzzwordCategoryManagement buzzwordCategoryManagement;
 
-    private static LinkedHashMap<Session, Player> gameSessions = new LinkedHashMap<>();
-    private static LinkedHashMap<HttpSession, Player> userSessions = new LinkedHashMap<>();
+    private LinkedHashMap<Session, Player> gameSessions = new LinkedHashMap<>();
+    private LinkedHashMap<HttpSession, Player> userSessions = new LinkedHashMap<>();
 
     public void createNewGame(int playerID, String buzzwordCategoryName){
 
@@ -63,18 +60,15 @@ public class BuzzwordServer implements Singleton {
         }
     }
 
-    private void joinExistingGame(int playerID, int gameID) {
-        try {
-            Player player = playerManagement.findPlayerByID(playerID);
+    public void joinExistingGame(int playerID, int gameID) throws IDNotFoundException {
 
-            Game game = gameManagement.getGame(gameID);
+        Player player = playerManagement.findPlayerByID(playerID);
 
-            game.addPlayerToGame(player);
+        Game game = gameManagement.getGame(gameID);
 
-            // TODO: Update GUI
-        } catch (IDNotFoundException e){
-            // TODO: Was tun, wenn der Player oder das Spiel nicht in der Datenbank exisitert?
-        }
+        game.addPlayerToGame(player);
+
+
     }
 
     public int playerLogin(String loginName, String loginPassword, HttpSession httpSession){
@@ -173,7 +167,7 @@ public class BuzzwordServer implements Singleton {
         gameManagement.changeGameState(game, gameState);
     }
 
-    public LinkedHashMap<Player, int[]> handlePlayerInput(Player player, int[] coordinates) throws BuzzwordNotOnGameBoardException, PlayerNotInGameException {
+    public LinkedHashMap<Player, int[]> handlePlayerInput(Player player, int[] coordinates) throws BuzzwordNotOnGameBoardException, PlayerNotInGameException, GameInWrongStateException {
         return gameManagement.handlePlayerInput(player, coordinates);
     }
 
@@ -183,6 +177,10 @@ public class BuzzwordServer implements Singleton {
 
     public int getPlayerGameID(Player player) throws PlayerNotInGameException {
         return gameManagement.getPlayerInGame(player).getId();
+    }
+
+    public void startGame(){
+
     }
 
     @Override

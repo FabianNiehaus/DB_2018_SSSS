@@ -24,23 +24,14 @@ function connect() {
 
 function disconnect() {
     conn.close();
-    document.getElementById("info").value = "";
-/*    document.getElementById("disconnect").setAttribute("disabled", "disabled");
+    /*document.getElementById("info").value = "";
+    document.getElementById("disconnect").setAttribute("disabled", "disabled");
     document.getElementById("connect").removeAttribute("disabled");*/
 }
-
-/*function sendMessage() {
-    conn.send(document.getElementById("msg").value);
-}*/
 
 // Sends the presed tiles as a String to the Server
 function sendAction(action) {
     conn.send(action)
-}
-
-function startGame(){
-    gameStarted = true;
-    conn.send("gameStarted");
 }
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -57,7 +48,6 @@ window.addEventListener("DOMContentLoaded", function () {
     Array.from(words, function (word) {
 
         word.addEventListener("click", function () {
-            //alert(this.classList[1]);
             sendAction(this.classList[1]);
         });
     });
