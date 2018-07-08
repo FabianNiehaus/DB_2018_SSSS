@@ -28,6 +28,17 @@ function disconnect() {
     document.getElementById("connect").removeAttribute("disabled");*/
 }
 
+function startGame() {
+
+    if (!gameStarted) {
+        gameStarted = true;
+        $('button[name="startGame"]').prop('disabled', true);
+        $('#middle').getChildren().prop("disabled", false);
+        alert("Das Spiel wurde gestartet.");
+    }
+}
+
+
 // Sends the presed tiles as a String to the Server
 function sendAction(action) {
     conn.send(action)
@@ -51,5 +62,7 @@ window.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
 
 

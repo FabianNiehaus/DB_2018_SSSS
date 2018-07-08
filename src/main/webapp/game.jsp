@@ -60,6 +60,11 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="js/game.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $('#middle').getChildren().prop("disabled", true);
+    </script>
+
 </head>
 
 <body>
