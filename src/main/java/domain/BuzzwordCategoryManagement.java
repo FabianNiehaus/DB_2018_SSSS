@@ -3,10 +3,13 @@ package domain;
 import data.Buzzword;
 import data.BuzzwordCategory;
 import exceptions.IDNotFoundException;
+import persistence.WordSQLManager;
 
 import java.util.LinkedList;
 
 public class BuzzwordCategoryManagement {
+
+    WordSQLManager wordSQLManager;
 
     public LinkedList<String> getBuzzwordCategorieNames() {
         LinkedList<String> categoryNames = new LinkedList<>();
@@ -18,9 +21,13 @@ public class BuzzwordCategoryManagement {
 
     private LinkedList<BuzzwordCategory> buzzwordCategories;
 
-
     public BuzzwordCategoryManagement() {
-        this.buzzwordCategories = buzzwordCategories;
+        try {
+            wordSQLManager = new WordSQLManager();
+            buzzwordCategories = new LinkedList<>(wordSQLManager.readAllCategories());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public BuzzwordCategory addBuzzwordCategory(String name){

@@ -26,7 +26,7 @@ public class WordSQLManager {
         connection = connectionManager.getConnection();
     }
 
-    public List<BuzzwordCategory> readAllCategorys() throws SQLException {
+    public List<BuzzwordCategory> readAllCategories() throws SQLException {
         List<BuzzwordCategory> buzzwordCategories = new ArrayList<>();
         preStatement = connection.prepareStatement("SELECT * FROM " + tableCategory +";");
         resultSet = preStatement.executeQuery();

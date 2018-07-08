@@ -21,6 +21,11 @@
         <servlet-name>MainMenuSVL</servlet-name>
         <jsp-file>mainMenu.jsp</jsp-file>
     </servlet>
+
+    <servlet>
+        <servlet-name>CreateGameSVL</servlet-name>
+        <jsp-file>createGame.jsp</jsp-file>
+    </servlet>
     
     <servlet-mapping>
         <servlet-name>LoginSVL</servlet-name>
@@ -36,5 +41,11 @@
         <servlet-name>MainMenuSVL</servlet-name>
         <url-pattern>/mainmenu</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreateGameSVL</servlet-name>
+        <url-pattern>/creategame</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

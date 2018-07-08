@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="common/gameServer.jsp"%>
@@ -44,16 +45,16 @@
 <%
     if(userInGame){
         %>
-            <form action="${pageContext.request.contextPath}/game">
+            <form action="<c:url value="/game"/>">
                 <input class="mainMenuButton" type="submit" value="Zum laufenden Spiel" />
             </form><br>
         <%
     } else {
         %>
-            <form action="${pageContext.request.contextPath}/creategame">
+            <form action="<c:url value="/creategame"/>">
                 <input class="mainMenuButton" type="submit" value="Neues Spiel erstellen" />
             </form><br>
-            <form action="${pageContext.request.contextPath}/joingame">
+            <form action="<c:url value="/joingame"/>">
                 <input class="mainMenuButton" type="submit" value="Spiel beitreten" />
             </form><br>
         <%
@@ -61,7 +62,7 @@
 
     if(gameServer.checkPlayerAdminState(playerID)){
         %>
-            <form action="${pageContext.request.contextPath}/manageCategories">
+            <form action="<c:url value="/managecategories"/>">
                 <input class="mainMenuButton" type="submit" value="Buzzwords bearbeiten" />
             </form><br>
         <%

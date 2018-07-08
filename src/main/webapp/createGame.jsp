@@ -1,5 +1,4 @@
 <%@ page import="java.util.LinkedList" %>
-<%@ page import="data.BuzzwordCategory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="common/gameServer.jsp"%>
@@ -44,15 +43,6 @@
 
     <link rel="stylesheet" href="css/StartHintergrund.css">
 
-
-    <script>
-        /*When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-    </script>
-
 </head>
 
 <body>
@@ -60,7 +50,7 @@
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
 </header>
-<form action="/createGame.jsp"></form>
+<form action="<c:url value="/creategame"/>"></form>
 <select name="category">
     <%
         for (String categoryName : buzzwordCategories){
