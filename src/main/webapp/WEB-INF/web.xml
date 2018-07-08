@@ -27,6 +27,16 @@
         <jsp-file>createGame.jsp</jsp-file>
     </servlet>
     
+    <servlet>
+        <servlet-name>JoinGameSVL</servlet-name>
+        <jsp-file>joinGame.jsp</jsp-file>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>CategoriesSVL</servlet-name>
+        <jsp-file>categoryManagement.jsp</jsp-file>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>LoginSVL</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -45,6 +55,16 @@
     <servlet-mapping>
         <servlet-name>CreateGameSVL</servlet-name>
         <url-pattern>/creategame</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>JoinGameSVL</servlet-name>
+        <url-pattern>/joingame</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>CategoriesSVL</servlet-name>
+        <url-pattern>/managecategories</url-pattern>
     </servlet-mapping>
 
 </web-app>
