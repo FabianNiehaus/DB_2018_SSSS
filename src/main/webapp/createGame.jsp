@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -50,17 +51,19 @@
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
 </header>
-<form action="<c:url value="/creategame"/>"></form>
-<select name="category">
-    <%
-        for (String categoryName : buzzwordCategories){
-    %>
-    <option value="<%=categoryName%>"><%=categoryName%></option>
-    <%
-        }
-    %>
-</select>
-<input type="submit" value="Kategorie auswählen">
+<form method="POST" action="<c:url value="/creategame"/>">
+    <label>
+        <select name="category">
+            <%
+                for (String categoryName : buzzwordCategories){
+            %>
+            <option value="<%=categoryName%>"><%=categoryName%></option>
+            <%
+                }
+            %>
+        </select>
+    </label>
+    <input type="submit" value="Kategorie auswählen">
 </form>
 
 </body>

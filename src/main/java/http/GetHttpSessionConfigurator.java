@@ -2,6 +2,8 @@
 
 package http;
 
+import domain.BuzzwordServer;
+
 import javax.servlet.http.HttpSession;
 import javax.websocket.HandshakeResponse;
 import javax.websocket.server.HandshakeRequest;
@@ -9,6 +11,8 @@ import javax.websocket.server.ServerEndpointConfig;
 
 public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurator
 {
+    BuzzwordServer buzzwordServer = (BuzzwordServer) BuzzwordServer.getInstance();
+
     @Override
     public void modifyHandshake(ServerEndpointConfig config,
                                 HandshakeRequest request,
@@ -18,4 +22,5 @@ public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurato
 
         config.getUserProperties().put(HttpSession.class.getName(),httpSession);
     }
+
 }

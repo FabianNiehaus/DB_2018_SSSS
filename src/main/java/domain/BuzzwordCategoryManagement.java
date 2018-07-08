@@ -19,15 +19,23 @@ public class BuzzwordCategoryManagement {
         return  categoryNames;
     }
 
-    private LinkedList<BuzzwordCategory> buzzwordCategories;
+    private LinkedList<BuzzwordCategory> buzzwordCategories = new LinkedList<>();
 
     public BuzzwordCategoryManagement() {
-        try {
+
+        LinkedList<Buzzword> buzzwords = new LinkedList<>();
+        for(int i = 1; i < 25; i++){
+            buzzwords.add(new Buzzword("TEST BUZZWORD " + String.valueOf(i)));
+        }
+
+        buzzwordCategories.add(new BuzzwordCategory("Test", buzzwords));
+
+        /*try {
             wordSQLManager = new WordSQLManager();
             buzzwordCategories = new LinkedList<>(wordSQLManager.readAllCategories());
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public BuzzwordCategory addBuzzwordCategory(String name){

@@ -2,6 +2,9 @@ package data;
 
 import exceptions.BuzzwordNotOnGameBoardException;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 public class GameBoard {
 
     class SingleCell {
@@ -29,12 +32,34 @@ public class GameBoard {
 
     private SingleCell cellMatrix[][] = new SingleCell[5][5];
 
-    public void setGameBoard(Buzzword[][] inputMatrix){
-        for (int i = 0; i < 5; i++){
-            for (int j = 0; j < 5; j++){
-                cellMatrix[i][j] = new SingleCell(inputMatrix[i][j]);
+    public void setGameBoard(LinkedList<Buzzword> buzzwords) {
+        int buzzwordIndex = 0;
+
+        Collections.shuffle(buzzwords);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (!(i == 2 && j == 2)) {
+                    cellMatrix[i][j] = new SingleCell(buzzwords.get(buzzwordIndex));
+                    buzzwordIndex++;
+                }
             }
         }
+    }
+
+    public LinkedList<String> getBuzzwords(){
+
+        LinkedList<String> buzzwords = new LinkedList<>();
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (!(i == 2 && j == 2)) {
+                    buzzwords.add(cellMatrix[i][j].getBuzzword().get());
+                }
+            }
+        }
+
+        return buzzwords;
     }
 
     public Buzzword setSingleCellMarked(int[] cellPosition) throws ArrayIndexOutOfBoundsException{

@@ -1,3 +1,4 @@
+<%@ page import="data.Game" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -9,7 +10,7 @@
     int playerID = -1;
     if(session.getAttribute(userKey) != null) playerID = (Integer) session.getAttribute(userKey);
 
-    boolean userInGame = false;
+    Game userInGame = null;
 
     //Handle HTTP GET
     if(request.getMethod().equals("GET")) {
@@ -43,7 +44,7 @@
 </header>
 
 <%
-    if(userInGame){
+    if(userInGame != null){
         %>
             <form action="<c:url value="/game"/>">
                 <input class="mainMenuButton" type="submit" value="Zum laufenden Spiel" />

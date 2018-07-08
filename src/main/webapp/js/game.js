@@ -18,15 +18,15 @@ function connect() {
 
     }
 
-    document.getElementById("connect").setAttribute("disabled", "disabled");
-    document.getElementById("disconnect").removeAttribute("disabled");
+/*    document.getElementById("connect").setAttribute("disabled", "disabled");
+    document.getElementById("disconnect").removeAttribute("disabled");*/
 }
 
 function disconnect() {
     conn.close();
     document.getElementById("info").value = "";
-    document.getElementById("disconnect").setAttribute("disabled", "disabled");
-    document.getElementById("connect").removeAttribute("disabled");
+/*    document.getElementById("disconnect").setAttribute("disabled", "disabled");
+    document.getElementById("connect").removeAttribute("disabled");*/
 }
 
 /*function sendMessage() {

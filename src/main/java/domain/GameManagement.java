@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class GameManagement {
 
-    private LinkedList<Game> games;
+    private LinkedList<Game> games = new LinkedList<>();
 
     public Game createGame(Player admin, BuzzwordCategory buzzwordCategory){
 
@@ -110,8 +110,11 @@ public class GameManagement {
     }
 
     private int getNextAvailabeGameID(){
-        // TODO: Logik für nächste verfügbare Game-ID
-        return 0;
+        int highestID = 0;
+        for(Game game : games){
+            if(game.getId() > highestID) highestID = game.getId();
+        }
+        return highestID + 1;
     }
 
     private void loadGames(){
