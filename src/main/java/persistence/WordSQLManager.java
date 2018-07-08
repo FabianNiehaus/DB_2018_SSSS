@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class WordSQLManager {
 
@@ -48,13 +49,13 @@ public class WordSQLManager {
         return buzzwordCategories;
     }
 
-    public BuzzwordCategory readBuzzwordCategory(int name) throws SQLException {
+    public BuzzwordCategory readBuzzwordCategory(String name) throws SQLException {
         BuzzwordCategory bc = null;
         preStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
         resultSet = preStatement.executeQuery();
         while (resultSet.next()) {
             bc = new BuzzwordCategory(resultSet.getString(1), new LinkedList<Buzzword>());
-            if (resultSet.getString(1) != bc.getName()) {
+            if (!Objects.equals(name, bc.getName())) {
                 bc.addWord(new Buzzword(resultSet.getString(0)));
             }
         }

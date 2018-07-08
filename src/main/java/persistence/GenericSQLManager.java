@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface GenericSQLManager<T> {
 
-    List<T> readAll() throws SQLException ;
+    List<T> readAll() throws Exception;
 
     void create(T t) throws SQLException;
 
