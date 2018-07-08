@@ -3,6 +3,7 @@ package domain;
 import data.Player;
 import exceptions.IDNotFoundException;
 import exceptions.IncorrectPasswordException;
+import exceptions.NameAlreadyExistsException;
 import persistence.GenericSQLManager;
 import persistence.PlayerSQLManager;
 
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerManagement {
 
@@ -26,9 +28,13 @@ public class PlayerManagement {
         System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());
     }
 
-    public Player createPlayer(String username, String loginname, String password, boolean isAdmin){
+    public Player createPlayer(String username, String loginname, String password, boolean isAdmin) throws NameAlreadyExistsException {
 
         int id = getNextAvailabePlayerID();
+
+        for (Map.Entry<Player, Boolean> entry : players.entrySet()){
+            if(entry.getKey().getLoginname().equals(loginname)) throw new NameAlreadyExistsException();
+        }
 
         Player newPlayer = new Player(id, username, loginname, password);
 
@@ -78,7 +84,7 @@ public class PlayerManagement {
         player.setAdmin(isAdmin, "i3ßfnzr984jf02");
     }
 
-    private  void loadPlayers() throws SQLException {
+    private  void loadPlayers() throws Exception {
         List<Player> playerlist = playerSQLManager.readAll();
         for(Player p : playerlist){
             players.put(p,false);

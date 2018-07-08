@@ -1,7 +1,6 @@
 // Variables
 var conn;
 var classHighlight = 'highlight';
-var arr = ["list", "items", "here"];
 
 var gameStarted = false;
 
@@ -12,8 +11,8 @@ function connect() {
 
     conn.onmessage = function (msg) {
 
-        let element = "#word " + msg.data;
-        $(element).addClass(classHighlight);
+        let element = ".word." + msg.data;
+        $(element).css('background-color', 'green');
 
     }
 
@@ -35,12 +34,12 @@ function sendAction(action) {
 
 window.addEventListener("DOMContentLoaded", function () {
 
-    var $hwords = $('.word').click(function (e) {
+    /*var $hwords = $('.word').click(function (e) {
         e.preventDefault();
 
         $(this).addClass(classHighlight);
 
-    });
+    });*/
 
     let words = document.querySelectorAll(".word");
 

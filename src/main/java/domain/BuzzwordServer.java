@@ -60,13 +60,16 @@ public class BuzzwordServer implements Singleton {
         }
     }
 
-    public void joinExistingGame(int playerID, int gameID) throws IDNotFoundException {
+    public void joinExistingGame(int playerID, int gameID) throws IDNotFoundException, GameInWrongStateException {
 
         Player player = playerManagement.findPlayerByID(playerID);
 
         Game game = gameManagement.getGame(gameID);
 
-        game.addPlayerToGame(player);
+
+        if(game.getGameState() == GameState.OPEN ) {
+            game.addPlayerToGame(player);
+        } else throw new GameInWrongStateException(GameState.ACTIVE, GameState.OPEN);
 
 
     }
@@ -85,7 +88,6 @@ public class BuzzwordServer implements Singleton {
     }
 
     public boolean checkPlayerLoginState(String SessionID, int playerID){
-
 
         try {
             Player player = playerManagement.findPlayerByID(playerID);
@@ -144,6 +146,9 @@ public class BuzzwordServer implements Singleton {
     }
 
     public void addGameSession(Session session, Player player){
+        for(Map.Entry<Session, Player> entry : gameSessions.entrySet()){
+            if(entry.getValue().equals(player)) gameSessions.remove(entry.getKey());
+        }
         gameSessions.put(session, player);
     }
 
@@ -180,6 +185,18 @@ public class BuzzwordServer implements Singleton {
     }
 
     public void startGame(){
+
+    }
+
+    public Player registerNewPlayer(String newUsername, String newPassword) throws InvalidCharacterException, NameAlreadyExistsException {
+
+        String pattern = "[A-Za-z][A-Za-z0-9]*";
+
+        if(newUsername.matches(pattern)){
+            return playerManagement.createPlayer(newUsername, newUsername, newPassword, false);
+        }
+
+        else throw new InvalidCharacterException();
 
     }
 

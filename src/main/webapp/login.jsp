@@ -43,14 +43,11 @@
                 session.setAttribute(userKey, playerID);
             } else {
                 %>
-
-                    <div id="loginFailed"> Nutzername oder Passwort falsch! </div>
-
+                <script>alert("Nutzername oder Passwort falsch!")</script>
                 <%
             }
 
         }
-
     }
 %>
 
@@ -84,26 +81,11 @@
 
 </form>
 
-<script>
-    function checkUsername(username){
-        const expr = /[!"§$%&/()=?`*'_:;,.#+´²³{[\]}~@€\\]/;
+<form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
+        <input class="registerButton" type="submit" value="Registrieren" />
+</form>
 
-        return username.length > 0 && !expr.test(username);
-    }
 
-    function checkInput() {
-        let username = $('#username').val();
-
-        if(checkUsername(username)){
-            $('#loginForm').submit();
-        } else {
-            alert("Username beinhaltet ungültige Zeichen!")
-        }
-
-    }
-</script>
-
-<%--<button type="button"><a href="Registieren02.html" class="choice">Registieren</a></button>--%>
 
 
 </body>

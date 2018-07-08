@@ -34,11 +34,6 @@ public class WebsocketHandler {
         Player player = gameServer.getUserSession(httpSession);
 
         gameServer.addGameSession(session, player);
-        try {
-            session.getAsyncRemote().sendText("Welcome to game " + gameServer.getPlayerGameID(player) + ", " + player.getUsername() + "!");
-        } catch (PlayerNotInGameException e) {
-            e.printStackTrace();
-        }
     }
 
     @OnClose

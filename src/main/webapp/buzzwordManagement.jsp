@@ -1,11 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zeitgeist
-  Date: 07.07.18
-  Time: 19:46
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!doctype html>
 <html>
 <head>
@@ -13,8 +7,7 @@
     <title>Buzzword Bingo</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <%@include file="common/imports.jsp"%>
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 
