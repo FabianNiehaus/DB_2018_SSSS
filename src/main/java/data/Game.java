@@ -1,10 +1,17 @@
 package data;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class Game {
+
+    private GameState gameState;
+    private Player admin;
+    private int id;
+    private Player winner = null;
+    private BuzzwordCategory buzzwordCategory;
+    private LinkedList<Buzzword> buzzwords;
+    private LinkedHashMap<Player, GameBoard> playersAndBoards = new LinkedHashMap<>();
 
     public Game(Player admin, int id, BuzzwordCategory buzzwordCategory) {
         this.admin = admin;
@@ -14,15 +21,9 @@ public class Game {
         this.buzzwords = buzzwordCategory.getBuzzwords();
     }
 
-    private GameState gameState;
-
     public Player getAdmin() {
         return admin;
     }
-
-    private Player admin;
-
-    private int id;
 
     public Player getWinner() {
         return winner;
@@ -31,8 +32,6 @@ public class Game {
     public void setWinner(Player winner) {
         this.winner = winner;
     }
-
-    private Player winner = null;
 
     public int getId() {
         return id;
@@ -46,13 +45,7 @@ public class Game {
         return buzzwords;
     }
 
-    private BuzzwordCategory buzzwordCategory;
-
-    private LinkedList<Buzzword> buzzwords;
-
-    private LinkedHashMap<Player, GameBoard> playersAndBoards = new LinkedHashMap<>();
-
-    public void addPlayerToGame(Player player){
+    public void addPlayerToGame(Player player) {
         GameBoard newGameBoard = new GameBoard();
         newGameBoard.setGameBoard(buzzwords);
         playersAndBoards.put(player, newGameBoard);
@@ -72,7 +65,7 @@ public class Game {
         this.gameState = gameState;
     }
 
-    public GameBoard  getPlayerGameBoard(Player player){
+    public GameBoard getPlayerGameBoard(Player player) {
         return playersAndBoards.get(player);
     }
 }
