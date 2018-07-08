@@ -21,7 +21,6 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
         connection = connectionManager.getConnection();
     }
 
-    @Override
     public void create(Player player) throws SQLException {
         preStatement = connection.prepareStatement("INSERT INTO " + table + "(Name,Kennwort,Punkte,IstAdmin) VALUES(\'" + player.getLoginname() + "\',\'" + player.getPassword() + "\',\'" + player.getScore() + "\',\'" + player.isAdmin() + "\');");
         preStatement.executeUpdate();
