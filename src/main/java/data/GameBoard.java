@@ -51,7 +51,7 @@ public class GameBoard {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (cellMatrix[i][j].getBuzzword().get().equals(buzzword.get())) {
+                if (!(i == 2 && j == 2) && cellMatrix[i][j].getBuzzword().get().equals(buzzword.get())) {
                     buzzwordPosition[0] = i;
                     buzzwordPosition[1] = j;
                     return buzzwordPosition;

@@ -12,9 +12,8 @@ function connect() {
 
     conn.onmessage = function (msg) {
 
-        cValue = document.getElementById("info").value;
-
-        document.getElementById("info").value = cValue + msg.data + "\n";
+        let element = "#word " + msg.data;
+        $(element).addClass(classHighlight);
 
     }
 
