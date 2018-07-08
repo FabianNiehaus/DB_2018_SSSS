@@ -1,6 +1,7 @@
 // Variables
 var conn;
 var classHighlight = 'highlight';
+var arr = ["list", "items", "here"];
 
 //Methods
 
@@ -54,3 +55,5 @@ window.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
