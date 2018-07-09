@@ -1,3 +1,6 @@
+<%@ page import="static com.sun.javafx.font.FontResource.SALT" %>
+<%@ page import="java.security.NoSuchAlgorithmException" %>
+<%@ page import="java.security.MessageDigest" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
@@ -32,7 +35,9 @@
         // Try to log in the user
         else {
             String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            String password = generateHash(request.getParameter("username")
+                    + request.getParameter("password"));
+
 
             playerID = gameServer.playerLogin(username, password, session);
 
@@ -49,6 +54,29 @@
 
         }
     }
+%>
+
+<%!
+    private static String generateHash(String input) {
+        StringBuilder hash = new StringBuilder();
+
+        try {
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = sha.digest(input.getBytes());
+            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                    'a', 'b', 'c', 'd', 'e', 'f' };
+            for (int idx = 0; idx < hashedBytes.length; ++idx) {
+                byte b = hashedBytes[idx];
+                hash.append(digits[(b & 0xf0) >> 4]);
+                hash.append(digits[b & 0x0f]);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return hash.toString();
+    }
+
 %>
 
 <html>
