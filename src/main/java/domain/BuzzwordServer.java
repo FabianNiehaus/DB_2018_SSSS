@@ -240,7 +240,7 @@ public class BuzzwordServer implements Singleton {
         String pattern = "[A-Za-z][A-Za-z0-9]*";
 
         if (newUsername.matches(pattern)) {
-            return playerManagement.createPlayer(newUsername, newUsername, newPassword, false);
+            return playerManagement.createPlayer(newUsername, newUsername, newPassword);
         } else throw new InvalidCharacterException();
 
     }

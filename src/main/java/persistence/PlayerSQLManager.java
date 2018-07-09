@@ -22,7 +22,7 @@ public class PlayerSQLManager implements GenericSQLManager<Player> {
     }
 
     public void create(Player player) throws SQLException {
-        preStatement = connection.prepareStatement("INSERT INTO " + table + "(Name,Kennwort,Punkte,IstAdmin) VALUES(\'" + player.getLoginname() + "\',\'" + player.getPassword() + "\',\'" + player.getScore() + "\',\'" + player.isAdmin() + "\');");
+        preStatement = connection.prepareStatement("INSERT INTO " + table + "(Name,Kennwort,Punkte,IstAdmin) VALUES(\'" + player.getLoginname() + "\',\'" + player.getPassword() + "\',\'" + player.getScore() + "\'," + (player.isAdmin() ? 1: 0) + ");");
         preStatement.executeUpdate();
 
     }

@@ -41,20 +41,24 @@ function disconnect() {
 }
 
 function checkGameState(){
+    let words = document.querySelectorAll(".word");
+
     if(gameStarted && !gameEnded){
-        clickEventListener = window.addEventListener("DOMContentLoaded", function () {
 
-            let words = document.querySelectorAll(".word");
+        Array.from(words, function (word) {
 
-            Array.from(words, function (word) {
-
-                word.addEventListener("click", function () {
-                    sendAction(this.classList[1]);
-                });
+            clickEventListener = word.addEventListener("click", function () {
+                gameSocket.send(this.classList[1]);
             });
         });
+
     } else {
-        window.removeEventListener("DOMContentLoaded", clickEventListener);
+        Array.from(words, function (word) {
+
+           word.removeEventListener("click", function () {
+                gameSocket.send(this.classList[1]);
+            });
+        });
     }
 }
 

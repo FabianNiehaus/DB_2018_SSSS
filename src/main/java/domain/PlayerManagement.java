@@ -29,7 +29,7 @@ public class PlayerManagement {
         }
     }
 
-    public Player createPlayer(String username, String loginname, String password, boolean isAdmin) throws NameAlreadyExistsException {
+    public Player createPlayer(String username, String loginname, String password) throws NameAlreadyExistsException {
 
         int id = getNextAvailabePlayerID();
 
@@ -46,12 +46,7 @@ public class PlayerManagement {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        boolean addedToPersistence = false;
-//        // TODO: Co-Routine sinnvoller? (ggf. SQL gerade nicht verfügbar)
-//        /*while(!addedToPersistence){
-//            writeSinglePlayerToPersistence(newPlayer);
-//        }
-//*/
+
         return newPlayer;
     }
 
@@ -76,17 +71,17 @@ public class PlayerManagement {
         throw new IDNotFoundException("Player", loginName);
     }
 
-    private boolean writeSinglePlayerToPersistence(Player player){
-        try {
-            playerSQLManager.create(player);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }        return false;
-    }
 
     private int getNextAvailabePlayerID(){
-        // TODO: Logik für nächste verfügbare Spieler-ID
-        return 0;
+        int maxID = 0;
+
+        for(Map.Entry<Player, Boolean> entry: players.entrySet()){
+            if(entry.getKey().getId() > maxID){
+                maxID = entry.getKey().getId();
+            }
+        }
+
+        return maxID;
     }
 
     private void setIsAdmin(Player player, boolean isAdmin){
