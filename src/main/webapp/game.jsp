@@ -56,10 +56,13 @@
     <meta charset="UTF-8"/>
     <title>Buzzword Bingo</title>
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+    <%@include file="common/imports.jsp"%>
     <script src="js/game.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $('#middle').getChildren().prop("disabled", true);
+    </script>
+
 </head>
 
 <body>

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="exceptions.IDNotFoundException" %>
+<%@ page import="exceptions.GameInWrongStateException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="common/gameServer.jsp"%>
@@ -32,9 +33,11 @@
                 rd.forward(request, response);
             } catch (IDNotFoundException e) {
                 %>
-
-                <div id="joinFailed">Das Spiel exisitert nicht! </div>
-
+                <script>alert(<%=e.getMessage()%>)</script>
+                <%
+            } catch (GameInWrongStateException e) {
+                %>
+                <script>alert("Spiel wurde bereits gestartet! ")</script>
                 <%
             }
         }

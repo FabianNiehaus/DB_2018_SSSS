@@ -1,7 +1,6 @@
 // Variables
 var conn;
 var classHighlight = 'highlight';
-var arr = ["list", "items", "here"];
 
 var gameStarted = false;
 
@@ -12,8 +11,8 @@ function connect() {
 
     conn.onmessage = function (msg) {
 
-        let element = "#word " + msg.data;
-        $(element).addClass(classHighlight);
+        let element = ".word." + msg.data;
+        $(element).css('background-color', 'green');
 
     }
 
@@ -28,6 +27,17 @@ function disconnect() {
     document.getElementById("connect").removeAttribute("disabled");*/
 }
 
+function startGame() {
+
+    if (!gameStarted) {
+        gameStarted = true;
+        $('button[name="startGame"]').prop('disabled', true);
+        $('#middle').getChildren().prop("disabled", false);
+        alert("Das Spiel wurde gestartet.");
+    }
+}
+
+
 // Sends the presed tiles as a String to the Server
 function sendAction(action) {
     conn.send(action)
@@ -35,12 +45,12 @@ function sendAction(action) {
 
 window.addEventListener("DOMContentLoaded", function () {
 
-    var $hwords = $('.word').click(function (e) {
+    /*var $hwords = $('.word').click(function (e) {
         e.preventDefault();
 
         $(this).addClass(classHighlight);
 
-    });
+    });*/
 
     let words = document.querySelectorAll(".word");
 
@@ -51,5 +61,7 @@ window.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
 
 

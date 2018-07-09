@@ -63,7 +63,7 @@
 
     if(gameServer.checkPlayerAdminState(playerID)){
         %>
-            <form action="<c:url value="/managecategories"/>">
+            <form method="GET" action="<c:url value="/manage/categories"/>">
                 <input class="mainMenuButton" type="submit" value="Buzzwords bearbeiten" />
             </form><br>
         <%

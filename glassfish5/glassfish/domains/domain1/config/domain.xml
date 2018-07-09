@@ -147,7 +147,7 @@
         </message-security-config>
         <property name="default-digest-algorithm" value="SHA-256" />
       </security-service>
-      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="C:\Program Files\Java\jdk1.8.0_121" system-classpath="">
+      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="C:\Program Files\Java\jdk1.8.0_172" system-classpath="">
         <jvm-options>-XX:MaxPermSize=192m</jvm-options>
         <jvm-options>-client</jvm-options>
         <jvm-options>-Djava.awt.headless=true</jvm-options>
