@@ -2,7 +2,6 @@
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="data.Game" %>
 <%@ page import="data.Player" %>
-<%@ page import="data.GameState" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="common/gameServer.jsp"%>
@@ -14,9 +13,6 @@
     if(session.getAttribute(userKey) != null) playerID = (Integer) session.getAttribute(userKey);
 
     LinkedList<String> words = new LinkedList();
-
-    boolean gameStarted = false;
-    boolean gameFinished = false;
 
     //Handle HTTP GET
     if(request.getMethod().equals("GET")) {
@@ -43,19 +39,6 @@
             Player player = gameServer.findPlayerByID(playerID);
             Game game = gameServer.checkPlayerInGameState(playerID);
             words = game.getPlayerGameBoard(player).getBuzzwords();
-        } else if (request.getParameter("startGame") != null) {
-            Player player = gameServer.findPlayerByID(playerID);
-
-            try {
-                Game game = gameServer.checkPlayerInGameState(playerID);
-                game.setGameState(GameState.ACTIVE);
-                gameServer.notifyInfoSocketHandlers(player, "Spiel gestartet!");
-                words = game.getPlayerGameBoard(player).getBuzzwords();
-                gameStarted = true;
-            } catch (Exception e) {
-                e.getMessage();
-                e.printStackTrace();
-            }
         }
     }
 %>
@@ -67,22 +50,6 @@
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
     <%@include file="common/imports.jsp"%>
     <script src="js/game.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        if(<%=gameStarted%> && !<%=gameFinished%>){
-            window.addEventListener("DOMContentLoaded", function () {
-
-                let words = document.querySelectorAll(".word");
-
-                Array.from(words, function (word) {
-
-                    word.addEventListener("click", function () {
-                        sendAction(this.classList[1]);
-                    });
-                });
-            });
-        }
-    </script>
 
 </head>
 
@@ -97,9 +64,7 @@
 <table class="container">
     <tr>
         <td class="left">
-            <form method="POST" action="<c:url value="/game"/>">
-                <input class="gameButton" type="submit" value="Spiel starten" name="startGame" onclick="return disconnect();" />
-            </form><br>
+            <button class="gameButton" onclick="startGame();">Spiel starten</button>
         </td>
         <td class="middle">
             <%if(words.size() == 24) {%>

@@ -108,9 +108,9 @@
 
                 <button id="login" type="submit">Login</button>
 
-                <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
-                    <input class="registerButton" type="submit" value="Registrieren" />
-                </form>
+            </form>
+            <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
+                <input class="registerButton" type="submit" value="Registrieren" />
             </form>
 
 
