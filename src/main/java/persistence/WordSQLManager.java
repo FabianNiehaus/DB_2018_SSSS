@@ -15,8 +15,8 @@ import java.util.Objects;
 public class WordSQLManager {
 
     private Connection connection;
-    private PreparedStatement preStatement;
-    private ResultSet resultSet;
+    private PreparedStatement distinctCategoriesPreStatement;
+    private ResultSet distinctCategoriesResultSet;
     private String table = "wort";
 
 
@@ -27,48 +27,61 @@ public class WordSQLManager {
 
     public List<BuzzwordCategory> readAllCategories() throws SQLException {
         List<BuzzwordCategory> buzzwordCategories = new ArrayList<>();
-        preStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
-        resultSet = preStatement.executeQuery();
-        while (resultSet.next()) {
+        distinctCategoriesPreStatement = connection.prepareStatement("SELECT DISTINCT Kategorie FROM " + table + ";");
+        distinctCategoriesResultSet = distinctCategoriesPreStatement.executeQuery();
+
+        while (distinctCategoriesResultSet.next()) {
             //Gucken ob Buzzwordkategorie schon existiert, ansonsten erstellen
-            int counter = 0;
-            for (BuzzwordCategory bc : buzzwordCategories) {
-                if (resultSet.getString(1) != bc.getName())
-                    counter++;
-                if (counter == buzzwordCategories.size()) {
-                    buzzwordCategories.add(new BuzzwordCategory(resultSet.getString(1), new LinkedList<Buzzword>()));
+            boolean categoryExists = false;
+
+            try{
+                String categoryName = distinctCategoriesResultSet.getString(1);
+
+                for (BuzzwordCategory bc : buzzwordCategories) {
+                    if (categoryName.equals(bc.getName()))
+                        categoryExists = true;
                 }
-            }
-//            Buzzword in die Kategorie laden
-            for (BuzzwordCategory bc : buzzwordCategories) {
-                if (resultSet.getString(1) != bc.getName()){
-                    bc.addWord(new Buzzword(resultSet.getString(0)));
+                if (!categoryExists) {
+                    buzzwordCategories.add(new BuzzwordCategory(categoryName, new LinkedList<Buzzword>()));
                 }
+            } catch (SQLException e){
+                e.getNextException();
             }
         }
+
+        for(BuzzwordCategory buzzwordCategory : buzzwordCategories){
+            PreparedStatement singleCategoryPreStatement = connection.prepareStatement("SELECT Name FROM " + table + " WHERE Kategorie=\'" + buzzwordCategory.getName() + "\';");
+            ResultSet singleCategoryResultSet = singleCategoryPreStatement.executeQuery();
+            while (singleCategoryResultSet.next()) {
+                buzzwordCategory.addWord(new Buzzword(singleCategoryResultSet.getString(1)));
+            }
+
+
+        }
+
         return buzzwordCategories;
     }
 
     public BuzzwordCategory readBuzzwordCategory(String name) throws SQLException {
         BuzzwordCategory bc = null;
-        preStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
-        resultSet = preStatement.executeQuery();
-        while (resultSet.next()) {
-            bc = new BuzzwordCategory(resultSet.getString(1), new LinkedList<Buzzword>());
+        distinctCategoriesPreStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
+        distinctCategoriesResultSet = distinctCategoriesPreStatement.executeQuery();
+        while (distinctCategoriesResultSet.next()) {
+            bc = new BuzzwordCategory(distinctCategoriesResultSet.getString(1), new LinkedList<Buzzword>());
             if (!Objects.equals(name, bc.getName())) {
-                bc.addWord(new Buzzword(resultSet.getString(0)));
+                bc.addWord(new Buzzword(distinctCategoriesResultSet.getString(0)));
             }
         }
         return  bc;
     }
 
     public void createBuzzword(Buzzword buzzword, BuzzwordCategory buzzwordCategory) throws SQLException {
-        preStatement = connection.prepareStatement("INSERT INTO " + table + "(Name,Kategorie) VALUES(\'" + buzzword.getBuzzword() + "\',\'" + buzzwordCategory.getName() + "\');");
-        preStatement.executeUpdate();
+        distinctCategoriesPreStatement = connection.prepareStatement("INSERT INTO " + table + "(Name,Kategorie) VALUES(\'" + buzzword.getBuzzword() + "\',\'" + buzzwordCategory.getName() + "\');");
+        distinctCategoriesPreStatement.executeUpdate();
     }
 
     public void deleteBuzzword(Buzzword buzzword, BuzzwordCategory buzzwordCategory) throws Exception {
-        preStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE Name=\"" + buzzword.getBuzzword() +"\";");
-        preStatement.executeUpdate();
+        distinctCategoriesPreStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE Name=\"" + buzzword.getBuzzword() +"\";");
+        distinctCategoriesPreStatement.executeUpdate();
     }
 }

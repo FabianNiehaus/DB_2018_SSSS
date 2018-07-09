@@ -20,7 +20,7 @@ function connect() {
 /*    document.getElementById("connect").setAttribute("disabled", "disabled");
     document.getElementById("disconnect").removeAttribute("disabled");*/
 }
-
+ienste
 function disconnect() {
     conn.close();
     /*document.getElementById("info").value = "";

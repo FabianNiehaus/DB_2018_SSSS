@@ -8,7 +8,7 @@ public class Game {
     private GameState gameState;
     private Player admin;
     private int id;
-    private Player winner = null;
+    private LinkedList<Player> winners = new LinkedList<>();
     private BuzzwordCategory buzzwordCategory;
     private LinkedList<Buzzword> buzzwords;
     private LinkedHashMap<Player, GameBoard> playersAndBoards = new LinkedHashMap<>();
@@ -25,12 +25,12 @@ public class Game {
         return admin;
     }
 
-    public Player getWinner() {
-        return winner;
+    public LinkedList<Player> getWinners() {
+        return winners;
     }
 
-    public void setWinner(Player winner) {
-        this.winner = winner;
+    public void setWinners(LinkedList<Player> winner) {
+        this.winners = winner;
     }
 
     public int getId() {

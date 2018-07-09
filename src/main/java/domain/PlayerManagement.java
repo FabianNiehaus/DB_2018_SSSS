@@ -78,7 +78,7 @@ public class PlayerManagement {
         player.setAdmin(isAdmin, "i3ßfnzr984jf02");
     }
 
-    private  void loadPlayers() throws SQLException {
+    private  void loadPlayers() throws Exception {
         List<Player> playerlist = playerSQLManager.readAll();
         for(Player p : playerlist){
             players.put(p,false);

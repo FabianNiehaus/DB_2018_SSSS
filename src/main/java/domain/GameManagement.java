@@ -59,6 +59,9 @@ public class GameManagement {
         }
 
         if(game.getGameState() == GameState.ACTIVE){
+
+            LinkedList<Player> winners = new LinkedList<>();
+
             // Get game board of current player
             GameBoard currentPlayerBoard = currentGamePlayersAndBoards.get(player);
 
@@ -67,6 +70,11 @@ public class GameManagement {
 
             // Add player and coordinates to return map
             coordinatesAndPlayers.put(player, coordinates);
+
+            // Check if player has won game
+            if(currentPlayerBoard.checkWinState()){
+                winners.add(player);
+            }
 
             // Circle through all other players in current game
             for(Map.Entry<Player, GameBoard> entry :currentGamePlayersAndBoards.entrySet()){
@@ -82,9 +90,18 @@ public class GameManagement {
                     gameBoard.setSingleCellMarked(buzzwordPosition);
                     // Add player and coordinates to return map
                     coordinatesAndPlayers.put(currentPlayer, buzzwordPosition);
+
+                    // Check if player has won game
+                    if(gameBoard.checkWinState()){
+                        winners.add(currentPlayer);
+                    }
                 }
             }
 
+            if(winners.size() > 0){
+                game.setGameState(GameState.FINISHED);
+                game.setWinners(winners);
+            }
             return coordinatesAndPlayers;
         }
 
