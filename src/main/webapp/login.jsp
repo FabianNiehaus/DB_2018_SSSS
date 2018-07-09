@@ -83,39 +83,39 @@
 <head>
     <%@ include file="common/imports.jsp"%>
     <meta charset="utf-8">
-    <%--<link rel="stylesheet" href="css/StartHintergrund.css">--%>
-    <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.6" type="text/css" media="screen"/>
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
     <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.6"></script>
 </head>
+
 <body>
 
-<h1>Buzzword Bingo</h1>
+<script>connect()</script>
 
-<form id="loginForm" method="post" action="<c:url value="/login"/>">
+<header>
+    <h1 class="h1">Buzzword Bingo</h1>
+</header>
 
-    <label>Nutzername
-        <input id="username" type="text" name="username" placeholder="Username">
-    </label>
+<table class="container">
+    <tr>
+        <td class="middlelogin">
+            <form id="loginForm" method="post" action="<c:url value="/login"/>">
 
-    <br>
+                <label for="username"><b>Username</b></label>
+                <input id="username" type="text" name="username" placeholder="Username"><br>
 
-    <label>Passwort
-        <input id="password" type="password" name="password">
-    </label>
+                <label for="password"><b>Password</b></label>
+                <input id="password" type="password" name="password"><br>
 
-    <br>
+                <button id="login" type="submit">Login</button>
 
-    <button id="login" type="submit">Login</button>
-
-</form>
-
-<form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
-        <input class="registerButton" type="submit" value="Registrieren" />
-</form>
-
-
+                <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
+                    <input class="registerButton" type="submit" value="Registrieren" />
+                </form>
+            </form>
 
 
+        </td>
+    </tr>
+</table>
 </body>
 </html>
-

@@ -78,32 +78,7 @@ public class GameBoard {
         SingleCell previousCellInColumn = null;
 
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-
-                // Go through Rows
-                if (previousCellInRow != null && !previousCellInRow.isMarked()) {
-                    fullRow = false;
-                } else if (cellMatrix[i][j].isMarked()) {
-                    fullRow = true;
-                }
-                previousCellInRow = cellMatrix[i][j];
-
-                // Go through columns
-                if (previousCellInColumn != null && !previousCellInColumn.isMarked()) {
-                    fullRow = false;
-                } else if (cellMatrix[j][i].isMarked()) {
-                    fullRow = true;
-                }
-                previousCellInColumn = cellMatrix[j][i];
-
-            }
-
-            if (fullRow || fullColumn) return true;
-
-            fullRow = false;
-            fullColumn = false;
-            previousCellInRow = null;
-            previousCellInColumn = null;
+            if(true);
         }
 
         return false;

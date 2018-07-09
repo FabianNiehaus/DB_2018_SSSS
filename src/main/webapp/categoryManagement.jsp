@@ -57,7 +57,7 @@
 
                     var arr = $("li").map(function() { return $(this).text() }).get();
 
-                    //conn.send(arr);
+                    //gameSocket.send(arr);
 
                 } else {
 

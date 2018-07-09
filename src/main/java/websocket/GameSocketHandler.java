@@ -18,8 +18,8 @@ import java.util.LinkedList;
 import java.util.Map;
 
 @ApplicationScoped
-@ServerEndpoint(value = "/actions", configurator = GetHttpSessionConfigurator.class)
-public class WebsocketHandler {
+@ServerEndpoint(value = "/game", configurator = GetHttpSessionConfigurator.class)
+public class GameSocketHandler {
 
     BuzzwordServer gameServer;
 
@@ -46,24 +46,8 @@ public class WebsocketHandler {
     public void onError(Throwable error) {
     }
 
-    /*public void handleMessageOLD(String message, Session session) {
-        int rowIndex = Integer.parseInt(message.substring(0,0));
-        int columnIndex = Integer.parseInt(message.substring(1,1));
-
-        session.getAsyncRemote().sendText(String.valueOf(rowIndex) + String.valueOf(columnIndex));
-
-        for(Map.Entry<Session, Player> entry: gameSessions.entrySet()){
-            if(!entry.getKey().equals(session)){
-                int rngRowIndex = (int)(Math.random()*5);
-                int rngColumnIndex = (int)(Math.random()*5);
-
-                session.getAsyncRemote().sendText(String.valueOf(rngRowIndex) + String.valueOf(rngColumnIndex));
-            }
-        }
-    }*/
-
     @OnMessage
-    public void handleMessage(String message, Session session){
+    public void handleMessage(String message, Session session) {
         // Get player who made the input (current player)
         Player currentPlayer = gameServer.getGameSession(session);
 
@@ -74,7 +58,6 @@ public class WebsocketHandler {
                 if(i != 3 && j != 3) validMessages.add(String.valueOf(i) + String.valueOf(j));
             }
         }
-
         if(validMessages.contains(message));*/
 
         // Coordinates of clicked cell in table
@@ -105,12 +88,15 @@ public class WebsocketHandler {
             }
         } catch (PlayerNotInGameException | BuzzwordNotOnGameBoardException e) {
             // TODO: Exception handling für Player-Inputs
-            session.getAsyncRemote().sendText(e.getMessage());
-            //e.printStackTrace();
+//            session.getAsyncRemote().sendText(e.getMessage());
+            e.printStackTrace();
         } catch (GameInWrongStateException e) {
-            session.getAsyncRemote().sendText(e.getMessage());
+            try {
+                gameServer.notifyInfoSocketHandlers(currentPlayer, e.getMessage());
+            } catch (PlayerNotInGameException e1) {
+                e1.printStackTrace();
+            }
         }
     }
-
 
 }
