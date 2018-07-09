@@ -9,6 +9,14 @@ public class GameBoard {
 
     private SingleCell cellMatrix[][] = new SingleCell[5][5];
 
+    public void setCellMatrix (SingleCell[][] cellMatrix) {
+        this.cellMatrix = cellMatrix;
+    }
+
+    public SingleCell[][] getCellMatrix () {
+        return cellMatrix;
+    }
+
     public void setGameBoard(LinkedList<Buzzword> buzzwords) {
         int buzzwordIndex = 0;
 
@@ -101,7 +109,7 @@ public class GameBoard {
         return false;
     }
 
-    class SingleCell {
+     public class SingleCell {
         boolean marked = false;
         Buzzword buzzword;
 
@@ -117,6 +125,12 @@ public class GameBoard {
         public void setMarked(boolean marked) {
             this.marked = marked;
         }
+
+         public void setBuzzword(Buzzword buzzword) {
+
+             this.buzzword = buzzword;
+
+         }
 
         public Buzzword getBuzzword() {
 

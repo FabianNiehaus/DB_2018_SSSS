@@ -1,5 +1,6 @@
 package persistence;
 
+import data.Buzzword;
 import data.Game;
 import data.GameBoard;
 import data.Player;
@@ -8,10 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
-import java.util.List;
+import java.util.*;
 
 public class GameSQLManager implements GenericSQLManager<Game> {
     private Connection connection;
@@ -29,6 +27,9 @@ public class GameSQLManager implements GenericSQLManager<Game> {
         List<Game> games = new ArrayList<>();
         preStatement = connection.prepareStatement("SELECT * FROM " + table +";");
         resultSet = preStatement.executeQuery();
+
+
+
         while (resultSet.next()) {
             WordSQLManager wordSQLManager = new WordSQLManager();
             Game g = new Game(
@@ -74,9 +75,75 @@ public class GameSQLManager implements GenericSQLManager<Game> {
         return null;
     }
 
-    private GameBoard loadGameboardWithPlayerId(int playerId) {
+    private GameBoard loadGameboardWithPlayerId(int playerId) throws SQLException {
         //TODO:lade Gameboard von Spieler
-        return null;
+
+        List<Game> games = new ArrayList<>();
+        GameBoard gameBoard = null;
+        preStatement = connection.prepareStatement("SELECT * FROM spielfeld " +
+                "WHERE spielfeld.SpielerID = " + playerId);
+        resultSet = preStatement.executeQuery();
+
+        if (resultSet != null ){
+
+                String words = resultSet.getString(1);
+                String[] wordArray = words.split(",");
+                GameBoard.SingleCell[][] cellMatrix = new GameBoard.SingleCell[5][5];
+
+                for (int i = 0 ; i < wordArray.length ; i++) {
+
+                    cellMatrix[i / 5][i % 5].setBuzzword(new Buzzword(wordArray[i]));
+
+                }
+
+                gameBoard.setCellMatrix(cellMatrix);
+
+        } else {
+
+            return null;
+
+        }
+
+        return gameBoard;
+
+    }
+
+    public void saveGame(Game game) throws SQLException {
+
+        Player currentPlayer = null;
+        GameBoard currentBoard = null;
+        String words = "";
+        StringBuilder builder = new StringBuilder();
+
+        for (Map.Entry<Player, GameBoard> entry :
+                game.getGamePlayersAndBoards().entrySet()) {
+
+            currentPlayer = entry.getKey();
+            currentBoard = entry.getValue();
+
+            for ( String currentWord : currentBoard.getBuzzwords() ) {
+
+                builder.append(currentWord + ",");
+
+            }
+
+            words = builder.toString();
+            builder.setLength(0);
+
+            preStatement = connection.prepareStatement(
+                    "INSERT INTO spielfeld" +
+                    "(`ID`," +
+                    "`Woerter`," +
+                    "`SpielerID`)" +
+                    "VALUES " +
+                    "(" + game.getId() + "," +
+                    words + "," +
+                    currentPlayer.getId() + ");"
+            );
+            preStatement.executeQuery();
+
+        }
+
     }
 
 
