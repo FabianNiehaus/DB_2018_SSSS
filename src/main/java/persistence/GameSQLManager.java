@@ -24,35 +24,40 @@ public class GameSQLManager implements GenericSQLManager<Game> {
 
 
     public List<Game> readAll() throws Exception {
+        Game game;
+        int gameID;
+        String wortKategorie;
+        int adminID;
+
         List<Game> games = new ArrayList<>();
-        preStatement = connection.prepareStatement("SELECT * FROM " + table +";");
+        WordSQLManager wordSQLManager = new WordSQLManager();
+        PlayerSQLManager playerSQLManager = new PlayerSQLManager();
+
+        preStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
         resultSet = preStatement.executeQuery();
 
-
-
         while (resultSet.next()) {
-            WordSQLManager wordSQLManager = new WordSQLManager();
-            Game g = new Game(
-                    getAdminOfGame(resultSet.getString(0)),
-                    Integer.parseInt(resultSet.getString(0)),
-                    wordSQLManager.readBuzzwordCategory(resultSet.getString(2))
-            );
+            gameID = Integer.parseInt(resultSet.getString(0));
+            wortKategorie = resultSet.getString(2);
+            adminID = Integer.parseInt(resultSet.getString(3));
 
-            //lade spieler mit boards in Hashmap
-            LinkedHashMap<Player, GameBoard> playersAndBoards = new LinkedHashMap<>();
-            PlayerSQLManager playerSQLManager = new PlayerSQLManager();
-            List<Player> players = playerSQLManager.readAll();
 
-            for (Player p : players) {
-                if (isPlayerInGame(p.getId(),g.getId())) {
-                    GameBoard gameboard = loadGameboardWithPlayerId(p.getId());
-                    playersAndBoards.put(p, gameboard);
+            for (Player currentPlayer : playerSQLManager.readAll()) {
+
+                if (currentPlayer.getId() == adminID) {
+
+                    game = new Game(currentPlayer,
+                                    gameID,
+                                    wordSQLManager.readBuzzwordCategory(wortKategorie));
+
+                    //preStatement = connection.prepareStatement("SELECT * FROM spiel_spieler WHERE SpielerID = """ + ";");
+
+
                 }
             }
-
         }
         return games;
-    }
+}
 
 
     @Override
@@ -78,25 +83,24 @@ public class GameSQLManager implements GenericSQLManager<Game> {
     private GameBoard loadGameboardWithPlayerId(int playerId) throws SQLException {
         //TODO:lade Gameboard von Spieler
 
-        List<Game> games = new ArrayList<>();
         GameBoard gameBoard = null;
         preStatement = connection.prepareStatement("SELECT * FROM spielfeld " +
                 "WHERE spielfeld.SpielerID = " + playerId);
         resultSet = preStatement.executeQuery();
 
-        if (resultSet != null ){
+        if (resultSet != null) {
 
-                String words = resultSet.getString(1);
-                String[] wordArray = words.split(",");
-                GameBoard.SingleCell[][] cellMatrix = new GameBoard.SingleCell[5][5];
+            String words = resultSet.getString(1);
+            String[] wordArray = words.split(",");
+            GameBoard.SingleCell[][] cellMatrix = new GameBoard.SingleCell[5][5];
 
-                for (int i = 0 ; i < wordArray.length ; i++) {
+            for (int i = 0; i < wordArray.length; i++) {
 
-                    cellMatrix[i / 5][i % 5].setBuzzword(new Buzzword(wordArray[i]));
+                cellMatrix[i / 5][i % 5].setBuzzword(new Buzzword(wordArray[i]));
 
-                }
+            }
 
-                gameBoard.setCellMatrix(cellMatrix);
+            gameBoard.setCellMatrix(cellMatrix);
 
         } else {
 
@@ -121,7 +125,7 @@ public class GameSQLManager implements GenericSQLManager<Game> {
             currentPlayer = entry.getKey();
             currentBoard = entry.getValue();
 
-            for ( String currentWord : currentBoard.getBuzzwords() ) {
+            for (String currentWord : currentBoard.getBuzzwords()) {
 
                 builder.append(currentWord + ",");
 
@@ -132,13 +136,13 @@ public class GameSQLManager implements GenericSQLManager<Game> {
 
             preStatement = connection.prepareStatement(
                     "INSERT INTO spielfeld" +
-                    "(`ID`," +
-                    "`Woerter`," +
-                    "`SpielerID`)" +
-                    "VALUES " +
-                    "(" + game.getId() + "," +
-                    words + "," +
-                    currentPlayer.getId() + ");"
+                            "(`ID`," +
+                            "`Woerter`," +
+                            "`SpielerID`)" +
+                            "VALUES " +
+                            "(" + game.getId() + "," +
+                            words + "," +
+                            currentPlayer.getId() + ");"
             );
             preStatement.executeQuery();
 
