@@ -61,13 +61,30 @@
 <html>
 <head>
     <title>Registrieren</title>
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
+
 </head>
+
+
 <body>
-<form method="post" action="<c:url value="/register"/>">
-    <label for="usernameInput">Nutzername</label>
-    <input type="text" name="newUsername" id="usernameInput">
-    <label for="passwordInput">Passwort</label>
-    <input type="password" name="newPassword" id="passwordInput">
-</form>
+
+<script>connect()</script>
+
+<header>
+    <h1 class="h1">Buzzword Bingo</h1>
+</header>
+
+<table class="container">
+    <tr>
+        <td class="middle">
+            <form method="post" action="<c:url value="/register"/>">
+                <label for="usernameInput">Nutzername</label>
+                <input type="text" name="newUsername" id="usernameInput">
+                <label for="passwordInput">Passwort</label>
+                <input type="password" name="newPassword" id="passwordInput">
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

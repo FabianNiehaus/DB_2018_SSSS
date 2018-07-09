@@ -42,30 +42,39 @@
 
     <%@ include file="common/imports.jsp"%>
 
-    <link rel="stylesheet" href="css/StartHintergrund.css">
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
 
 
 </head>
 
 <body>
 
+<script>connect()</script>
+
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
 </header>
-<form method="POST" action="<c:url value="/creategame"/>">
-    <label>
-        <select name="category">
-            <%
-                for (String categoryName : buzzwordCategories){
-            %>
-            <option value="<%=categoryName%>"><%=categoryName%></option>
-            <%
-                }
-            %>
-        </select>
-    </label>
-    <input type="submit" value="Kategorie auswählen">
-</form>
 
+<table class="container">
+    <tr>
+        <td class="middle">
+
+            <form method="POST" action="<c:url value="/creategame"/>">
+                <label>
+                    <select name="category">
+                        <%
+                            for (String categoryName : buzzwordCategories){
+                        %>
+                        <option value="<%=categoryName%>"><%=categoryName%></option>
+                        <%
+                            }
+                        %>
+                    </select>
+                </label>
+                <input class="catButton" type="submit" value="Kategorie auswählen">
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

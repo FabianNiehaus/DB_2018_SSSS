@@ -52,23 +52,29 @@
 
     <%@ include file="common/imports.jsp"%>
 
-    <link rel="stylesheet" href="css/StartHintergrund.css">
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
 
 </head>
-
 <body>
+
+<script>connect()</script>
 
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
 </header>
-<form method="POST" action="<c:url value="/joingame"/>">
-    <label>Spiel-ID
-        <input id="gameID" type="text" name="gameID" placeholder="Spiel-ID">
-        <br>
-        <button id="join" type="submit">Spiel beitreten</button>
-    </label>
-</form>
 
-
+<table class="container">
+    <tr>
+        <td class="middle">
+            <form method="POST" action="<c:url value="/joingame"/>">
+                <label>Spiel-ID
+                    <input id="gameID" type="text" name="gameID" placeholder="Spiel-ID">
+                    <br>
+                    <button id="join" type="submit">Spiel beitreten</button>
+                </label>
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

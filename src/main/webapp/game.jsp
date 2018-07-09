@@ -66,7 +66,7 @@
         <td class="left">
             <button class="gameButton" onclick="startGame();">Spiel starten</button>
         </td>
-        <td class="middle">
+        <td class="middleGame">
             <%if(words.size() == 24) {%>
             <table>
                 <tr>
