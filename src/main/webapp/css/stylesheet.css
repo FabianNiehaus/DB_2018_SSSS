@@ -7,17 +7,11 @@
  */
 
 html {
-
-    /*background-image: url("Assets/Hintergrund.jpg");*/
-    /*background-position: center;*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-    /*height: 100%;*/
+    background-color: #F0FFF0;
 }
 
 h1 {
     color: #F2DB5B;
-    /*color: #D4AF37;*/
     font-family: trajan pro, sans-serif;
     text-align: center;
     font-size: 60px;
@@ -58,7 +52,7 @@ h1 {
 .middle {
     width: 400px;
     margin: 30px;
-    text-align: center; /*test*/
+    text-align: center;
 }
 
 .right {
