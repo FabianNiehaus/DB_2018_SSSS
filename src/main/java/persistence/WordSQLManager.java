@@ -63,16 +63,13 @@ public class WordSQLManager {
     }
 
     public BuzzwordCategory readBuzzwordCategory(String name) throws SQLException {
-        BuzzwordCategory bc = null;
-        distinctCategoriesPreStatement = connection.prepareStatement("SELECT * FROM " + table + ";");
+        LinkedList<Buzzword>  buzzwordsInCategory = new LinkedList<>();
+        distinctCategoriesPreStatement = connection.prepareStatement("SELECT Name FROM " + table + " WHERE Kategorie=\'" + name + "\';");
         distinctCategoriesResultSet = distinctCategoriesPreStatement.executeQuery();
         while (distinctCategoriesResultSet.next()) {
-            bc = new BuzzwordCategory(distinctCategoriesResultSet.getString(1), new LinkedList<Buzzword>());
-            if (!Objects.equals(name, bc.getName())) {
-                bc.addWord(new Buzzword(distinctCategoriesResultSet.getString(0)));
-            }
+                buzzwordsInCategory.add(new Buzzword(distinctCategoriesResultSet.getString(1)));
         }
-        return  bc;
+        return  new BuzzwordCategory(name,buzzwordsInCategory);
     }
 
     public void createBuzzword(Buzzword buzzword, BuzzwordCategory buzzwordCategory) throws SQLException {
