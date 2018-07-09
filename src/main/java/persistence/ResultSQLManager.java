@@ -1,33 +1,33 @@
 package persistence;
 
-import data.Ergebnis;
+import data.Result;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ResultSQLManager implements GenericSQLManager<Ergebnis> {
+public class ResultSQLManager implements GenericSQLManager<Result> {
     @Override
-    public List<Ergebnis> readAll() throws SQLException {
+    public List<Result> readAll() throws SQLException {
         return null;
     }
 
     @Override
-    public void create(Ergebnis ergebnis) throws SQLException {
+    public void create(Result ergebnis) throws SQLException {
 
     }
 
     @Override
-    public Ergebnis read(int id) throws SQLException {
+    public Result read(int id) throws SQLException {
         return null;
     }
 
     @Override
-    public Boolean update(Ergebnis ergebnis) throws Exception {
+    public Boolean update(Result ergebnis) throws Exception {
         return null;
     }
 
     @Override
-    public Boolean delete(Ergebnis ergebnis) throws Exception {
+    public Boolean delete(Result ergebnis) throws Exception {
         return null;
     }
 }

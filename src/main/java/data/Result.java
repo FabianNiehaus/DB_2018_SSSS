@@ -1,6 +1,6 @@
 package data;
 
-public class Ergebnis {
+public class Result {
 
     private int playerID;
     private int gameID;
