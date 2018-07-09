@@ -7,6 +7,8 @@ let gameEnded;
 
 let clickEventListener;
 
+let state = true;
+
 //Methods
 
 function connect() {
@@ -21,16 +23,17 @@ function connect() {
     };
 
     infoSocket.onmessage = function (msg) {
-        if(msg.data === "Spiel gestartet!"){
+        const infoBox = $("#info");
+
+        if(msg.data === "Das Spiel wurde gestartet!"){
             gameStarted = true;
             checkGameState();
-        }if(msg.data === "Das Spiel ist vorbei! Gewonnen haben: "){
+            setStartButtonState(false);
+        } else if (msg.data === "Das Spiel ist vorbei! Gewonnen haben: ") {
             gameEnded = true;
             checkGameState();
         }
-
-        const infoBox = $("#info");
-        infoBox.val(infoBox.val() + "\n" + msg.data);
+        infoBox.html("<p>" + msg.data + "</p>" + infoBox.html());
     };
 
 }
@@ -38,6 +41,15 @@ function connect() {
 function disconnect() {
     gameSocket.close();
     infoSocket.close();
+}
+
+function setStartButtonState(state){
+
+    let startGameButton = $("#startGameButton");
+
+    if(state) startGameButton.prop("disabled",false);
+    if(!state)  startGameButton.prop("disabled",true);
+
 }
 
 function checkGameState(){

@@ -1,8 +1,6 @@
 package websocket;
 
-import data.Game;
-import data.GameState;
-import data.Player;
+import data.*;
 import domain.BuzzwordServer;
 import exceptions.BuzzwordNotOnGameBoardException;
 import exceptions.GameInWrongStateException;
@@ -59,9 +57,10 @@ public class GameSocketHandler {
 
         try {
             // For all players in the game: set cell with according buzzword as marked and return coordinates of these cells
-            Pair<Game, LinkedHashMap<Player, int[]>> returnValues = gameServer.handlePlayerInput(currentPlayer, coordinates);
-            LinkedHashMap<Player, int[]> playerpositions = returnValues.getValue();
-            Game game = returnValues.getKey();
+            InputReturn returnValues = gameServer.handlePlayerInput(currentPlayer, coordinates);
+            LinkedHashMap<Player, int[]> playerpositions = returnValues.getPlayerPositions();
+            Game game = returnValues.getGame();
+            Buzzword buzzword = returnValues.getBuzzword();
 
             // For every player in the specific game
             for(Map.Entry<Player, int[]> entry : playerpositions.entrySet()){
@@ -81,11 +80,14 @@ public class GameSocketHandler {
                 }
             }
 
+            gameServer.notifyInfoSocketHandlers(currentPlayer, "BUZZ! Er hat " + buzzword.get() + " gesagt!");
+
             if(game.getGameState() == GameState.FINISHED){
                 gameServer.notifyInfoSocketHandlers(currentPlayer,"Das Spiel ist vorbei! Gewonnen haben: ");
                 for(Player p : game.getWinners()){
                     gameServer.notifyInfoSocketHandlers(currentPlayer, p.getUsername());
                 }
+                gameServer.endGame(game);
             }
 
 

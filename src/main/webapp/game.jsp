@@ -45,6 +45,7 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8"/>
     <title>Buzzword Bingo</title>
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
@@ -64,7 +65,10 @@
 <table class="container">
     <tr>
         <td class="left">
-            <button class="gameButton" onclick="startGame();">Spiel starten</button>
+            <button id="startGameButton" class="gameButton" onclick="startGame();">Spiel starten</button>
+            <form method="get" action="<c:url value="/mainmenu"/>">
+                <input class="mainMenuButton" type="submit" value="Zum Hauptmenü" name="newGame">
+            </form>
         </td>
         <td class="middleGame">
             <%if(words.size() == 24) {%>
@@ -115,7 +119,7 @@
             <% } %>
         </td>
         <td class="right">
-            <textarea name="info" id="info" cols="50" rows="25" disabled></textarea>
+            <div id="info"></div>
         </td>
     </tr>
 </table>

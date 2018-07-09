@@ -2,6 +2,7 @@ package domain;
 
 import data.Game;
 import data.GameState;
+import data.InputReturn;
 import data.Player;
 import exceptions.*;
 import javafx.util.Pair;
@@ -27,18 +28,18 @@ public class BuzzwordServer implements Singleton {
     private LinkedHashMap<HttpSession, Player> userSessions = new LinkedHashMap<>();
     private LinkedHashMap<Session, InfoSocketHandler> infoSocketHandlers = new LinkedHashMap<>();
 
-    public void notifyInfoSocketHandlers (Player initialPlayer, String message) throws PlayerNotInGameException {
+    public void notifyInfoSocketHandlers(Player initialPlayer, String message) throws PlayerNotInGameException {
         Game game = gameManagement.getPlayerInGame(initialPlayer);
 
         LinkedList<Session> playerSessionsToNotify = new LinkedList<>();
         LinkedList<Player> playersInGame = new LinkedList<>(game.getGamePlayersAndBoards().keySet());
-        for (Player player: playersInGame) {
-            for(Map.Entry<Session, Player> entry: infoSessions.entrySet()){
-                if(entry.getValue().equals(player)) playerSessionsToNotify.add(entry.getKey());
+        for (Player player : playersInGame) {
+            for (Map.Entry<Session, Player> entry : infoSessions.entrySet()) {
+                if (entry.getValue().equals(player)) playerSessionsToNotify.add(entry.getKey());
             }
         }
 
-        for (Session session: playerSessionsToNotify){
+        for (Session session : playerSessionsToNotify) {
             infoSocketHandlers.get(session).handleMessage(message, session);
         }
     }
@@ -62,11 +63,7 @@ public class BuzzwordServer implements Singleton {
         return BuzzwordServer.serverInstance;
     }
 
-    public LinkedHashMap<Session, InfoSocketHandler> getInfoSocketHandlers() {
-        return infoSocketHandlers;
-    }
-
-    public void addInfoSocketHandler(Session session ,InfoSocketHandler infoSocketHandler) {
+    public void addInfoSocketHandler(Session session, InfoSocketHandler infoSocketHandler) {
         infoSocketHandlers.put(session, infoSocketHandler);
     }
 
@@ -112,6 +109,7 @@ public class BuzzwordServer implements Singleton {
         try {
             Player player = playerManagement.playerLogin(loginName, loginPassword);
             userSessions.put(httpSession, player);
+
             return player.getId();
         } catch (IDNotFoundException | IncorrectPasswordException e) {
             System.out.println(e.getMessage());
@@ -199,10 +197,6 @@ public class BuzzwordServer implements Singleton {
         infoSessions.put(session, player);
     }
 
-    public void removeInfoSession(Session session) {
-        infoSessions.remove(session);
-    }
-
     public Player getInfoSession(Session session) {
         return infoSessions.get(session);
     }
@@ -211,28 +205,12 @@ public class BuzzwordServer implements Singleton {
         return gameManagement.getPlayerInGame(player);
     }
 
-    public boolean isPlayerAdminInGame(Game game, Player player) {
-        return gameManagement.isPlayerAdminInGame(game, player);
-    }
-
-    public void changeGameState(Game game, GameState gameState) {
-        gameManagement.changeGameState(game, gameState);
-    }
-
-    public Pair<Game, LinkedHashMap<Player, int[]>> handlePlayerInput(Player player, int[] coordinates) throws BuzzwordNotOnGameBoardException, PlayerNotInGameException, GameInWrongStateException {
+    public InputReturn handlePlayerInput(Player player, int[] coordinates) throws BuzzwordNotOnGameBoardException, PlayerNotInGameException, GameInWrongStateException {
         return gameManagement.handlePlayerInput(player, coordinates);
     }
 
     public LinkedHashMap<Session, Player> getGameSessions() {
         return gameSessions;
-    }
-
-    public int getPlayerGameID(Player player) throws PlayerNotInGameException {
-        return gameManagement.getPlayerInGame(player).getId();
-    }
-
-    public void startGame() {
-
     }
 
     public Player registerNewPlayer(String newUsername, String newPassword) throws InvalidCharacterException, NameAlreadyExistsException {
@@ -243,6 +221,10 @@ public class BuzzwordServer implements Singleton {
             return playerManagement.createPlayer(newUsername, newUsername, newPassword);
         } else throw new InvalidCharacterException();
 
+    }
+
+    public void endGame(Game game){
+        gameManagement.removeGame(game);
     }
 
     @Override

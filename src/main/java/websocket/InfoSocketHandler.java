@@ -35,8 +35,13 @@ public class InfoSocketHandler {
 
         gameServer.addInfoSession(session, player);
 
-        session.getAsyncRemote().sendText("Willkommen " + player.getUsername());
-
+        try {
+            session.getAsyncRemote().sendText("SpielID: " + gameServer.getPlayerInGame(player).getId());
+            session.getAsyncRemote().sendText("Willkommen " + player.getUsername());
+            session.getAsyncRemote().sendText("Drücke SPIEL STARTEN um zu beginnen!");
+        } catch (PlayerNotInGameException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClose
@@ -60,13 +65,12 @@ public class InfoSocketHandler {
 
                 game.setGameState(GameState.ACTIVE);
 
-                gameServer.notifyInfoSocketHandlers(player, "Spiel gestartet!");
+                gameServer.notifyInfoSocketHandlers(player, "Das Spiel wurde gestartet!");
+
             } catch (PlayerNotInGameException e) {
                 e.printStackTrace();
             }
-        }
-
-        if(session.isOpen()){
+        } else if(session.isOpen()){
             session.getAsyncRemote().sendText(message);
         }
     }
