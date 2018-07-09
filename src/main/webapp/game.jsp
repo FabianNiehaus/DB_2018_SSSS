@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.LinkedList" %>
-<%@ page import="java.util.Collections" %>
 <%@ page import="data.Game" %>
 <%@ page import="data.Player" %>
 <%@ page import="data.GameState" %>
@@ -15,6 +14,9 @@
     if(session.getAttribute(userKey) != null) playerID = (Integer) session.getAttribute(userKey);
 
     LinkedList<String> words = new LinkedList();
+
+    boolean gameStarted = false;
+    boolean gameFinished = false;
 
     //Handle HTTP GET
     if(request.getMethod().equals("GET")) {
@@ -43,15 +45,22 @@
             words = game.getPlayerGameBoard(player).getBuzzwords();
         } else if (request.getParameter("startGame") != null) {
             Player player = gameServer.findPlayerByID(playerID);
-            Game game = gameServer.checkPlayerInGameState(playerID);
-            game.setGameState(GameState.ACTIVE);
-            words = game.getPlayerGameBoard(player).getBuzzwords();
+
+            try {
+                Game game = gameServer.checkPlayerInGameState(playerID);
+                game.setGameState(GameState.ACTIVE);
+                gameServer.notifyInfoSocketHandlers(player, "Spiel gestartet!");
+                words = game.getPlayerGameBoard(player).getBuzzwords();
+                gameStarted = true;
+            } catch (Exception e) {
+                e.getMessage();
+                e.printStackTrace();
+            }
         }
     }
 %>
 
 <html>
-<!-- See this live on http://jsfiddle.net/FloydPink/KHLtw/ -->
 <head>
     <meta charset="UTF-8"/>
     <title>Buzzword Bingo</title>
@@ -60,7 +69,19 @@
     <script src="js/game.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        $('#middle').getChildren().prop("disabled", true);
+        if(<%=gameStarted%> && !<%=gameFinished%>){
+            window.addEventListener("DOMContentLoaded", function () {
+
+                let words = document.querySelectorAll(".word");
+
+                Array.from(words, function (word) {
+
+                    word.addEventListener("click", function () {
+                        sendAction(this.classList[1]);
+                    });
+                });
+            });
+        }
     </script>
 
 </head>
@@ -69,87 +90,69 @@
 
 <script>connect()</script>
 
-
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
 </header>
 
-<div class="container">
+<table class="container">
+    <tr>
+        <td class="left">
+            <form method="POST" action="<c:url value="/game"/>">
+                <input class="gameButton" type="submit" value="Spiel starten" name="startGame" onclick="return disconnect();" />
+            </form><br>
+        </td>
+        <td class="middle">
+            <%if(words.size() == 24) {%>
+            <table>
+                <tr>
+                    <td class="word 00 cell"><%=words.get(0)%></td>
+                    <td class="word 01 cell"><%=words.get(1)%></td>
+                    <td class="word 02 cell"><%=words.get(2)%></td>
+                    <td class="word 03 cell"><%=words.get(3)%></td>
+                    <td class="word 04 cell"><%=words.get(4)%></td>
 
-    <div class="playfield">
+                </tr>
+                <tr>
+                    <td class="word 10 cell"><%=words.get(5)%></td>
+                    <td class="word 11 cell"><%=words.get(6)%></td>
+                    <td class="word 12 cell"><%=words.get(7)%></td>
+                    <td class="word 13 cell"><%=words.get(8)%></td>
+                    <td class="word 14 cell"><%=words.get(9)%></td>
 
-        <table class="table-grid">
-            <tr>
-                <table class="left">
-                    <tr>
-                        <td>
+                </tr>
+                <tr>
+                    <td class="word 20 cell"><%=words.get(10)%></td>
+                    <td class="word 21 cell"><%=words.get(11)%></td>
+                    <td class="spacer cell"></td>
+                    <td class="word 23 cell"><%=words.get(12)%></td>
+                    <td class="word 24 cell"><%=words.get(13)%></td>
 
-                            <form method="POST" action="<c:url value="/game"/>">
-                                <input class="gameButton" type="submit" value="Spiel starten" name="startGame" onclick="return disconnect();" />
-                            </form><br>
+                </tr>
+                <tr>
+                    <td class="word 30 cell"><%=words.get(14)%></td>
+                    <td class="word 31 cell"><%=words.get(15)%></td>
+                    <td class="word 32 cell"><%=words.get(16)%></td>
+                    <td class="word 33 cell"><%=words.get(17)%></td>
+                    <td class="word 34 cell"><%=words.get(18)%></td>
 
-                        </td>
-                    </tr>
-                </table>
-            </tr>
-            <tr>
-                <td>
-                <table class="middle" style="width:50%">
+                </tr>
+                <tr>
+                    <td class="word 40 cell"><%=words.get(19)%></td>
+                    <td class="word 41 cell"><%=words.get(20)%></td>
+                    <td class="word 42 cell"><%=words.get(21)%></td>
+                    <td class="word 43 cell"><%=words.get(22)%></td>
+                    <td class="word 44 cell"><%=words.get(23)%></td>
 
-                    <tr>
-                        <td class="word 00"><%=words.get(0)%></td>
-                        <td class="word 01"><%=words.get(1)%></td>
-                        <td class="word 02"><%=words.get(2)%></td>
-                        <td class="word 03"><%=words.get(3)%></td>
-                        <td class="word 04"><%=words.get(4)%></td>
-
-                    </tr>
-                    <tr>
-                        <td class="word 10"><%=words.get(5)%></td>
-                        <td class="word 11"><%=words.get(6)%></td>
-                        <td class="word 12"><%=words.get(7)%></td>
-                        <td class="word 13"><%=words.get(8)%></td>
-                        <td class="word 14"><%=words.get(9)%></td>
-
-                    </tr>
-                    <tr>
-                        <td class="word 20"><%=words.get(10)%></td>
-                        <td class="word 21"><%=words.get(11)%></td>
-                        <td class="spacer"></td>
-                        <td class="word 23"><%=words.get(12)%></td>
-                        <td class="word 24"><%=words.get(13)%></td>
-
-                    </tr>
-                    <tr>
-                        <td class="word 30"><%=words.get(14)%></td>
-                        <td class="word 31"><%=words.get(15)%></td>
-                        <td class="word 32"><%=words.get(16)%></td>
-                        <td class="word 33"><%=words.get(17)%></td>
-                        <td class="word 34"><%=words.get(18)%></td>
-
-                    </tr>
-                    <tr>
-                        <td class="word 40"><%=words.get(19)%></td>
-                        <td class="word 41"><%=words.get(20)%></td>
-                        <td class="word 42"><%=words.get(21)%></td>
-                        <td class="word 43"><%=words.get(22)%></td>
-                        <td class="word 44"><%=words.get(23)%></td>
-
-                    </tr>
-                </table>
-                </td>
-            </tr>
-
-            <tr>
-                <table class="right">
-                    <tr>
-                        <textarea name="info" id="info" cols="50" rows="25" disabled></textarea>
-                    </tr>
-                </table>
-            </tr>
-
-        </table>
-    </div>
-</div>
+                </tr>
+            </table>
+            <% } else { %>
+            <p>Keine Wörter geladen!</p>
+            <% } %>
+        </td>
+        <td class="right">
+            <textarea name="info" id="info" cols="50" rows="25" disabled></textarea>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

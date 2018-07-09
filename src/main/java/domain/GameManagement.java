@@ -102,10 +102,11 @@ public class GameManagement {
                 game.setGameState(GameState.FINISHED);
                 game.setWinners(winners);
             }
+
             return coordinatesAndPlayers;
         }
 
-        throw new GameInWrongStateException(game.getGameState(), GameState.ACTIVE);
+        throw new GameInWrongStateException(game.getGameState());
     }
 
     public void changeGameState(Game game, GameState gameState) {
@@ -144,6 +145,10 @@ public class GameManagement {
 
     private void loadGames(){
         // TODO: Spieler aus SQL laden, wenn Spieler-Management gestartet wird
+    }
+
+    public void removeGame(Game game){
+        games.remove(game);
     }
 
 }

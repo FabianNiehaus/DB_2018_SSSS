@@ -1,8 +1,8 @@
-/*var conn;
+/*var gameSocket;
 
 function connect() {
-    conn = new WebSocket("ws://localhost:8080/BuzzwordBingo/actions");
-    conn.onmessage = function(msg) {
+    gameSocket = new WebSocket("ws://localhost:8080/BuzzwordBingo/actions");
+    gameSocket.onmessage = function(msg) {
         cValue = document.getElementById("out").value;
         document.getElementById("out").value = cValue + msg.data + "\n";
     }
@@ -11,18 +11,18 @@ function connect() {
 }
 
 function disconnect() {
-    conn.close();
+    gameSocket.close();
     document.getElementById("out").value = "";
     document.getElementById("disconnect").setAttribute("disabled", "disabled");
     document.getElementById("connect").removeAttribute("disabled");
 }
 
 function sendMessage() {
-    conn.send(document.getElementById("msg").value);
+    gameSocket.send(document.getElementById("msg").value);
 }
 
 function sendAction (action) {
-    conn.send(action)
+    gameSocket.send(action)
 }*/
 
 window.addEventListener("DOMContentLoaded", function() {
