@@ -10,8 +10,6 @@
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 
-    <link rel="stylesheet" href="css/management-page.css"/>
-
     <script type="text/javascript">
         $(function () {
 
@@ -70,37 +68,45 @@
 
         });
     </script>
+    <link rel="stylesheet" href="css/stylesheet.css"/>
+
 </head>
 
-
 <body>
-<center>
-    <div id="content">
-        <h1 class="h1">Buzzword Bingo</h1>
-        <div id="#main">
-            <input id="text" type="text">
-            <br><br>
-            <button id="new">Add new Item</button>
-            <button id="delete">Delete Selected Items</button>
-        </div>
-        <p id="feedback">
-            <span>Selected Items:&nbsp;</span>
-            <span id="select-result"></span>
-        </p>
 
-        <ol id="selectable">
-            <li class="ui-widget-content">Item 1</li>
-            <li class="ui-widget-content">Item 2</li>
-            <li class="ui-widget-content">Item 3</li>
-            <li class="ui-widget-content">Item 4</li>
-            <li class="ui-widget-content">Item 5</li>
-            <li class="ui-widget-content">Item 6</li>
-        </ol>
-        <button id="submitList" type="submit"></button>
-    </div>
-</center>
-</body>
-</html>
+<script>connect()</script>
 
+<header>
+    <h1 class="h1">Buzzword Bingo</h1>
+</header>
+
+<table class="container">
+    <tr>
+        <td class="middle">
+
+            <h1 class="h1">Buzzword Bingo</h1>
+            <div id="#main">
+                <input id="text" type="text">
+                <br><br>
+                <button id="new">Add new Item</button>
+                <button id="delete">Delete Selected Items</button>
+            </div>
+            <p id="feedback">
+                <span>Selected Items:&nbsp;</span>
+                <span id="select-result"></span>
+            </p>
+
+            <ol id="selectable">
+                <li class="ui-widget-content">Item 1</li>
+                <li class="ui-widget-content">Item 2</li>
+                <li class="ui-widget-content">Item 3</li>
+                <li class="ui-widget-content">Item 4</li>
+                <li class="ui-widget-content">Item 5</li>
+                <li class="ui-widget-content">Item 6</li>
+            </ol>
+            <button id="submitList" type="submit"></button>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

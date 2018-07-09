@@ -34,41 +34,48 @@
 
     <%@ include file="common/imports.jsp"%>
 
-    <link rel="stylesheet" href="css/StartHintergrund.css">
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
 
 </head>
 <body>
+
+<script>connect()</script>
 
 <header>
     <h1 class="h1">Buzzword Bingo</h1>
 </header>
 
-<%
-    if(userInGame != null){
-        %>
+<table class="container">
+    <tr>
+        <td class="middle">
+            <%
+                if(userInGame != null){
+            %>
             <form action="<c:url value="/game"/>">
                 <input class="mainMenuButton" type="submit" value="Zum laufenden Spiel" />
             </form><br>
-        <%
-    } else {
-        %>
+            <%
+            } else {
+            %>
             <form action="<c:url value="/creategame"/>">
                 <input class="mainMenuButton" type="submit" value="Neues Spiel erstellen" />
             </form><br>
             <form action="<c:url value="/joingame"/>">
                 <input class="mainMenuButton" type="submit" value="Spiel beitreten" />
             </form><br>
-        <%
-    }
+            <%
+                }
 
-    if(gameServer.checkPlayerAdminState(playerID)){
-        %>
+                if(gameServer.checkPlayerAdminState(playerID)){
+            %>
             <form method="GET" action="<c:url value="/manage/categories"/>">
                 <input class="mainMenuButton" type="submit" value="Buzzwords bearbeiten" />
             </form><br>
-        <%
-    }
-%>
-
+            <%
+                }
+            %>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

@@ -8,15 +8,16 @@
 
 html {
 
-    background-image: url("Assets/Hintergrund.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
+    /*background-image: url("Assets/Hintergrund.jpg");*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    /*height: 100%;*/
 }
 
 h1 {
-    color: #D4AF37;
+    color: #F2DB5B;
+    /*color: #D4AF37;*/
     font-family: trajan pro, sans-serif;
     text-align: center;
     font-size: 60px;
@@ -49,12 +50,12 @@ h1 {
     text-align: right;
 }
 
-.middle {
+.middleGame {
     width: 800px;
     text-align: center;
 }
 
-.middlelogin {
+.middle {
     width: 400px;
     margin: 30px;
     text-align: center; /*test*/
@@ -101,7 +102,7 @@ h1 {
 }
 
 .highlight {
-    background-color: green;
+    background-color: #37C0AA;
     font-weight: bold;
 }
 
@@ -112,7 +113,7 @@ h1 {
 }
 
 /* Full-width inputs */
-input[type=text], input[type=password] {
+input, select/*[type=text], input[type=password]*/ {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -123,8 +124,8 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
-button, .registerButton {
-    background-color: #4CAF50;
+button, .registerButton, .mainMenuButton, .catButton {
+    background-color: #37C0AA;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -134,7 +135,7 @@ button, .registerButton {
 }
 
 /* Add a hover effect for buttons */
-button:hover, .registerButton:hover {
+button:hover, .registerButton:hover,.mainMenuButton:hover, .catButton:hover {
     opacity: 0.8;
 }
 

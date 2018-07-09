@@ -97,7 +97,7 @@
 
 <table class="container">
     <tr>
-        <td class="middlelogin">
+        <td class="middle">
             <form id="loginForm" method="post" action="<c:url value="/login"/>">
 
                 <label for="username"><b>Username</b></label>

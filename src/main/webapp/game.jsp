@@ -101,7 +101,7 @@
                 <input class="gameButton" type="submit" value="Spiel starten" name="startGame" onclick="return disconnect();" />
             </form><br>
         </td>
-        <td class="middle">
+        <td class="middleGame">
             <%if(words.size() == 24) {%>
             <table>
                 <tr>
