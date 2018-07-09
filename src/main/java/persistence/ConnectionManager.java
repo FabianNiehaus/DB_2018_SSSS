@@ -7,7 +7,8 @@ import java.sql.SQLException;
 public class ConnectionManager {
 
     private Connection connection;
-    private String url = "jdbc:mysql://localhost:3306/buzzwordbingodb";
+    private String url = "jdbc:mysql://localhost:3306/buzzwordbingodb" +
+            "?verifyServerCertificate=false&useSSL=false&requireSSL=false";
     private String user = "buzz";
     private String password = "bingo";
 

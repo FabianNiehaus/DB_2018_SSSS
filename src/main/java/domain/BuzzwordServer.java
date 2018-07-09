@@ -56,6 +56,7 @@ public class BuzzwordServer implements Singleton {
 
             game.addPlayerToGame(initialPlayer);
         } catch (IDNotFoundException e){
+            e.printStackTrace();
             // TODO: Was tun, wenn der Player nicht in der Datenbank exisitert?
         }
     }
