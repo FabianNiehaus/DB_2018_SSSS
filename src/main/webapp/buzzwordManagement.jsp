@@ -11,7 +11,6 @@
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 
-    <link rel="stylesheet" href="css/management-page.css"/>
 
     <script type="text/javascript">
         $(function () {
@@ -71,6 +70,8 @@
 
         });
     </script>
+    <link rel="stylesheet" href="css/stylesheet.css"/>
+
 </head>
 
 <body>
