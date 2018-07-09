@@ -5,10 +5,9 @@ import exceptions.BuzzwordNotOnGameBoardException;
 import exceptions.GameInWrongStateException;
 import exceptions.IDNotFoundException;
 import exceptions.PlayerNotInGameException;
+import javafx.util.Pair;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class GameManagement {
 
@@ -39,7 +38,7 @@ public class GameManagement {
         throw new IDNotFoundException("Game", id);
     }
 
-    public LinkedHashMap<Player, int[]> handlePlayerInput(Player player, int[] coordinates) throws PlayerNotInGameException, BuzzwordNotOnGameBoardException, GameInWrongStateException {
+    public Pair<Game, LinkedHashMap<Player, int[]> > handlePlayerInput(Player player, int[] coordinates) throws PlayerNotInGameException, BuzzwordNotOnGameBoardException, GameInWrongStateException {
         Game game = null;
         LinkedHashMap<Player, GameBoard> currentGamePlayersAndBoards = null;
         LinkedHashMap<Player, int[]> coordinatesAndPlayers = new LinkedHashMap<>();
@@ -103,7 +102,7 @@ public class GameManagement {
                 game.setWinners(winners);
             }
 
-            return coordinatesAndPlayers;
+            return new Pair<> (game, coordinatesAndPlayers);
         }
 
         throw new GameInWrongStateException(game.getGameState());

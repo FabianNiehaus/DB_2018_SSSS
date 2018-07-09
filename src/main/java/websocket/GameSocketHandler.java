@@ -8,6 +8,7 @@ import exceptions.BuzzwordNotOnGameBoardException;
 import exceptions.GameInWrongStateException;
 import exceptions.PlayerNotInGameException;
 import http.GetHttpSessionConfigurator;
+import javafx.util.Pair;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.servlet.http.HttpSession;
@@ -67,10 +68,12 @@ public class GameSocketHandler {
 
         try {
             // For all players in the game: set cell with according buzzword as marked and return coordinates of these cells
-            LinkedHashMap<Player, int[]> returnValues = gameServer.handlePlayerInput(currentPlayer, coordinates);
+            Pair<Game, LinkedHashMap<Player, int[]>> returnValues = gameServer.handlePlayerInput(currentPlayer, coordinates);
+            LinkedHashMap<Player, int[]> playerpositions = returnValues.getValue();
+            Game game = returnValues.getKey();
 
             // For every player in the specific game
-            for(Map.Entry<Player, int[]> entry : returnValues.entrySet()){
+            for(Map.Entry<Player, int[]> entry : playerpositions.entrySet()){
                 Player player = entry.getKey();
 
                 // For all sessions
@@ -86,6 +89,15 @@ public class GameSocketHandler {
                     }
                 }
             }
+
+            if(game.getGameState() == GameState.FINISHED){
+                gameServer.notifyInfoSocketHandlers(currentPlayer,"Das Spiel ist vorbei! Gewonnen haben: ");
+                for(Player p : game.getWinners()){
+                    gameServer.notifyInfoSocketHandlers(currentPlayer, p.getUsername());
+                }
+            }
+
+
         } catch (PlayerNotInGameException | BuzzwordNotOnGameBoardException e) {
             // TODO: Exception handling für Player-Inputs
 //            session.getAsyncRemote().sendText(e.getMessage());

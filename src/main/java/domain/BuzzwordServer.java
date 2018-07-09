@@ -4,6 +4,7 @@ import data.Game;
 import data.GameState;
 import data.Player;
 import exceptions.*;
+import javafx.util.Pair;
 import websocket.InfoSocketHandler;
 
 import javax.ejb.Singleton;
@@ -218,7 +219,7 @@ public class BuzzwordServer implements Singleton {
         gameManagement.changeGameState(game, gameState);
     }
 
-    public LinkedHashMap<Player, int[]> handlePlayerInput(Player player, int[] coordinates) throws BuzzwordNotOnGameBoardException, PlayerNotInGameException, GameInWrongStateException {
+    public Pair<Game, LinkedHashMap<Player, int[]>> handlePlayerInput(Player player, int[] coordinates) throws BuzzwordNotOnGameBoardException, PlayerNotInGameException, GameInWrongStateException {
         return gameManagement.handlePlayerInput(player, coordinates);
     }
 

@@ -2,8 +2,6 @@
 let gameSocket;
 let infoSocket;
 
-let gameStarted = false;
-
 //Methods
 
 function connect() {

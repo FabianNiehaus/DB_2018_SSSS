@@ -27,6 +27,8 @@ public class GameBoard {
                 if (!(i == 2 && j == 2)) {
                     cellMatrix[i][j] = new SingleCell(buzzwords.get(buzzwordIndex));
                     buzzwordIndex++;
+                } else {
+                    cellMatrix[i][j] = new SingleCell(new Buzzword("!!Placeholder!!"));
                 }
             }
         }
@@ -71,14 +73,20 @@ public class GameBoard {
     }
 
     public boolean checkWinState() {
-        boolean fullRow = false;
-        boolean fullColumn = false;
-
-        SingleCell previousCellInRow = null;
-        SingleCell previousCellInColumn = null;
 
         for (int i = 0; i < 5; i++) {
-            if(true);
+            if(cellMatrix[i][0].isMarked()
+                    && cellMatrix[i][1].isMarked()
+                    && cellMatrix[i][2].isMarked()
+                    && cellMatrix[i][3].isMarked()
+                    && cellMatrix[i][4].isMarked())
+                return true;
+            if(cellMatrix[0][i].isMarked()
+                    && cellMatrix[1][i].isMarked()
+                    && cellMatrix[2][i].isMarked()
+                    && cellMatrix[3][i].isMarked()
+                    && cellMatrix[4][i].isMarked())
+                return true;
         }
 
         return false;
