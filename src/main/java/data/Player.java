@@ -9,6 +9,8 @@ public class Player {
     private int score;
     private boolean isAdmin;
 
+
+
     public Player(int id, String username, String loginname, String password) {
         this.id = id;
         this.username = username;
@@ -42,6 +44,18 @@ public class Player {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", loginname='" + loginname + '\'' +
+                ", password='" + password + '\'' +
+                ", score=" + score +
+                ", isAdmin=" + isAdmin +
+                '}';
     }
 
 }

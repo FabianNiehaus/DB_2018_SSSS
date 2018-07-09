@@ -8,10 +8,7 @@ import persistence.GenericSQLManager;
 import persistence.PlayerSQLManager;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerManagement {
 
@@ -22,10 +19,14 @@ public class PlayerManagement {
 
     PlayerManagement() throws Exception {
 //        createPlayer("TestPlayer", "test", "test", false);
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxHALLO");
 
         loadPlayers();
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + players.toString());
+        //Debug Ausgabe
+        Set<Player> playerSet = players.keySet();
+        System.out.println("Spieler: \n");
+        for(Player p:playerSet) {
+            System.out.println(p.toString() + "\n");
+        }
     }
 
     public Player createPlayer(String username, String loginname, String password, boolean isAdmin) throws NameAlreadyExistsException {
@@ -40,12 +41,17 @@ public class PlayerManagement {
 
         players.put(newPlayer, false);
 
-        boolean addedToPersistence = false;
-        // TODO: Co-Routine sinnvoller? (ggf. SQL gerade nicht verfügbar)
-        /*while(!addedToPersistence){
-            writeSinglePlayerToPersistence(newPlayer);
+        try {
+            playerSQLManager.create(newPlayer);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-*/
+//        boolean addedToPersistence = false;
+//        // TODO: Co-Routine sinnvoller? (ggf. SQL gerade nicht verfügbar)
+//        /*while(!addedToPersistence){
+//            writeSinglePlayerToPersistence(newPlayer);
+//        }
+//*/
         return newPlayer;
     }
 
@@ -71,8 +77,11 @@ public class PlayerManagement {
     }
 
     private boolean writeSinglePlayerToPersistence(Player player){
-        // TODO: Logik für Speicherung eines Spielers in SQL
-        return false;
+        try {
+            playerSQLManager.create(player);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }        return false;
     }
 
     private int getNextAvailabePlayerID(){
