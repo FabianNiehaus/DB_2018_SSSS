@@ -55,8 +55,6 @@
 <head>
     <%@ include file="common/imports.jsp"%>
     <meta charset="utf-8">
-    <%--<link rel="stylesheet" href="css/StartHintergrund.css">--%>
-    <%--<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.6" type="text/css" media="screen"/>--%>
     <link rel=stylesheet type="text/css" href="css/stylesheet.css">
     <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.6"></script>
 </head>

@@ -8,10 +8,11 @@
 
 html {
 
-    /*background-color: darkgoldenrod;*/
-    /*background-image: image("Assets/Hintergrund.jpg");*/
+    background-image: url("Assets/Hintergrund.jpg");
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
 }
 
 h1 {
@@ -55,7 +56,7 @@ h1 {
 
 .middlelogin {
     width: 400px;
-    margin: 10px;
+    margin: 30px;
     text-align: center; /*test*/
 }
 
@@ -107,7 +108,7 @@ h1 {
 /* Bordered form */
 #loginForm {
     border: 3px solid #f1f1f1;
-    padding:3px;
+    padding:10px 3px 10px 3px;
 }
 
 /* Full-width inputs */
@@ -118,6 +119,7 @@ input[type=text], input[type=password] {
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    background-color: transparent;
 }
 
 /* Set a style for all buttons */
