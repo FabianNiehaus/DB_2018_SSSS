@@ -98,22 +98,23 @@
 <table class="container">
     <tr>
         <td class="middle">
-            <form id="loginForm" method="post" action="<c:url value="/login"/>">
+            <div id="loginForm">
+                <form id="logForm" method="post" action="<c:url value="/login"/>">
 
-                <label for="username"><b>Username</b></label>
-                <input id="username" type="text" name="username" placeholder="Username"><br>
+                    <label for="username"><b>Username</b></label>
+                    <input id="username" type="text" name="username" placeholder="Username"><br>
 
-                <label for="password"><b>Password</b></label>
-                <input id="password" type="password" name="password"><br>
+                    <label for="password"><b>Password</b></label>
+                    <input id="password" type="password" name="password"><br>
 
-                <button id="login" type="submit">Login</button>
+                    <button id="login" type="submit">Login</button>
+
+                </form>
 
                 <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
                     <input class="registerButton" type="submit" value="Registrieren" />
                 </form>
-            </form>
-
-
+            </div>
         </td>
     </tr>
 </table>
