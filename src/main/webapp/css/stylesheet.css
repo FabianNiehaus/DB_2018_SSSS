@@ -50,6 +50,7 @@ h1 {
 
 .middle {
     width: 800px;
+    text-align: center; /*test*/
 }
 
 .right {

@@ -56,38 +56,45 @@
     <%@ include file="common/imports.jsp"%>
     <meta charset="utf-8">
     <%--<link rel="stylesheet" href="css/StartHintergrund.css">--%>
-    <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.6" type="text/css" media="screen"/>
+    <%--<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.6" type="text/css" media="screen"/>--%>
+    <link rel=stylesheet type="text/css" href="css/stylesheet.css">
     <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.6"></script>
 </head>
+
 <body>
 
-<h1>Buzzword Bingo</h1>
+<script>connect()</script>
 
-<form id="loginForm" method="post" action="<c:url value="/login"/>">
+<header>
+    <h1 class="h1">Buzzword Bingo</h1>
+</header>
 
-    <label>Nutzername
-        <input id="username" type="text" name="username" placeholder="Username">
-    </label>
+<table class="container">
+    <tr>
+        <td class="middle">
+            <form id="loginForm" method="post" action="<c:url value="/login"/>">
 
-    <br>
+                <label>Nutzername
+                    <input id="username" type="text" name="username" placeholder="Username">
+                </label>
 
-    <label>Passwort
-        <input id="password" type="password" name="password">
-    </label>
+                <br>
 
-    <br>
+                <label>Passwort
+                    <input id="password" type="password" name="password">
+                </label>
 
-    <button id="login" type="submit">Login</button>
+                <br>
 
-</form>
+                <button id="login" type="submit">Login</button>
 
-<form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
-        <input class="registerButton" type="submit" value="Registrieren" />
-</form>
+            </form>
 
-
-
-
+            <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
+                <input class="registerButton" type="submit" value="Registrieren" />
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
-
