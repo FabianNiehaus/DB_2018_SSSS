@@ -52,15 +52,6 @@ public class GameSocketHandler {
         // Get player who made the input (current player)
         Player currentPlayer = gameServer.getGameSession(session);
 
-        // TODO: Input validation
-        /*LinkedList<String> validMessages = new LinkedList<>();
-        for(int i = 1; i < 6; i++){
-            for(int j = 1; j < 6; j++){
-                if(i != 3 && j != 3) validMessages.add(String.valueOf(i) + String.valueOf(j));
-            }
-        }
-        if(validMessages.contains(message));*/
-
         // Coordinates of clicked cell in table
         int rowIndex =  Character.getNumericValue(message.charAt(0));
         int columnIndex =  Character.getNumericValue(message.charAt(1));
@@ -100,7 +91,6 @@ public class GameSocketHandler {
 
         } catch (PlayerNotInGameException | BuzzwordNotOnGameBoardException e) {
             // TODO: Exception handling für Player-Inputs
-//            session.getAsyncRemote().sendText(e.getMessage());
             e.printStackTrace();
         } catch (GameInWrongStateException e) {
             try {

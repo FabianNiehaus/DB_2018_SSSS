@@ -2,6 +2,11 @@
 let gameSocket;
 let infoSocket;
 
+let gameStarted;
+let gameEnded;
+
+let clickEventListener;
+
 //Methods
 
 function connect() {
@@ -16,6 +21,14 @@ function connect() {
     };
 
     infoSocket.onmessage = function (msg) {
+        if(msg.data === "Spiel gestartet!"){
+            gameStarted = true;
+            checkGameState();
+        }if(msg.data === "Das Spiel ist vorbei! Gewonnen haben: "){
+            gameEnded = true;
+            checkGameState();
+        }
+
         const infoBox = $("#info");
         infoBox.val(infoBox.val() + "\n" + msg.data);
     };
@@ -27,11 +40,26 @@ function disconnect() {
     infoSocket.close();
 }
 
+function checkGameState(){
+    if(gameStarted && !gameEnded){
+        clickEventListener = window.addEventListener("DOMContentLoaded", function () {
 
-// Sends the presed tiles as a String to the Server
-function sendAction(action) {
-    gameSocket.send(action)
+            let words = document.querySelectorAll(".word");
+
+            Array.from(words, function (word) {
+
+                word.addEventListener("click", function () {
+                    sendAction(this.classList[1]);
+                });
+            });
+        });
+    } else {
+        window.removeEventListener("DOMContentLoaded", clickEventListener);
+    }
 }
 
+function startGame(){
+    infoSocket.send("gameStarted");
+}
 
 

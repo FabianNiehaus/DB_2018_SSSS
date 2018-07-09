@@ -1,5 +1,7 @@
 package websocket;
 
+import data.Game;
+import data.GameState;
 import data.Player;
 import domain.BuzzwordServer;
 import exceptions.BuzzwordNotOnGameBoardException;
@@ -51,6 +53,19 @@ public class InfoSocketHandler {
 
     @OnMessage
     public void handleMessage(String message, Session session){
+        if(message.equals("gameStarted")){
+            try {
+                Player player = gameServer.getInfoSession(session);
+                Game game = gameServer.getPlayerInGame(player);
+
+                game.setGameState(GameState.ACTIVE);
+
+                gameServer.notifyInfoSocketHandlers(player, "Spiel gestartet!");
+            } catch (PlayerNotInGameException e) {
+                e.printStackTrace();
+            }
+        }
+
         if(session.isOpen()){
             session.getAsyncRemote().sendText(message);
         }
