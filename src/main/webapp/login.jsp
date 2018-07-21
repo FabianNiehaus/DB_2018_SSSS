@@ -7,7 +7,6 @@
 <%@ include file="common/gameServer.jsp"%>
 
 <%  
-
     String userKey = "loggedInUser";
 
     int playerID = -1;
@@ -38,7 +37,6 @@
             String password = generateHash(request.getParameter("username")
                     + request.getParameter("password"));
 
-
             playerID = gameServer.playerLogin(username, password, session);
 
             if(playerID > -1) {
@@ -51,7 +49,6 @@
                 <script>alert("Nutzername oder Passwort falsch!")</script>
                 <%
             }
-
         }
     }
 %>
@@ -91,32 +88,32 @@
 
 <script>connect()</script>
 
-<header>
-    <h1 class="h1">Buzzword Bingo</h1>
-</header>
+    <header>
+        <h1 class="h1">Buzzword Bingo</h1>
+    </header>
 
-<table class="container">
-    <tr>
-        <td class="middle">
-            <div id="loginForm">
-                <form id="logForm" method="post" action="<c:url value="/login"/>">
+    <table class="container">
+        <tr>
+            <td class="middle">
+                <div id="loginForm">
+                    <form id="logForm" method="post" action="<c:url value="/login"/>">
 
-                    <label for="username"><b>Username</b></label>
-                    <input id="username" type="text" name="username" placeholder="Username"><br>
+                        <label for="username"><b>Username</b></label>
+                        <input id="username" type="text" name="username" placeholder="Username"><br>
 
-                    <label for="password"><b>Password</b></label>
-                    <input id="password" type="password" name="password"><br>
+                        <label for="password"><b>Password</b></label>
+                        <input id="password" type="password" name="password"><br>
 
-                    <button id="login" type="submit">Login</button>
+                        <button id="login" type="submit">Login</button>
 
-                </form>
+                    </form>
 
-                <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
-                    <input class="registerButton" type="submit" value="Registrieren" />
-                </form>
-            </div>
-        </td>
-    </tr>
-</table>
+                    <form id="registerRedirectForm" method="get" action="<c:url value="/register"/>">
+                        <input class="registerButton" type="submit" value="Registrieren" />
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

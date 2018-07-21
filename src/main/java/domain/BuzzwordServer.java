@@ -28,23 +28,6 @@ public class BuzzwordServer implements Singleton {
     private LinkedHashMap<HttpSession, Player> userSessions = new LinkedHashMap<>();
     private LinkedHashMap<Session, InfoSocketHandler> infoSocketHandlers = new LinkedHashMap<>();
 
-    public void notifyInfoSocketHandlers(Player initialPlayer, String message) throws PlayerNotInGameException {
-        Game game = gameManagement.getPlayerInGame(initialPlayer);
-
-        LinkedList<Session> playerSessionsToNotify = new LinkedList<>();
-        LinkedList<Player> playersInGame = new LinkedList<>(game.getGamePlayersAndBoards().keySet());
-        for (Player player : playersInGame) {
-            for (Map.Entry<Session, Player> entry : infoSessions.entrySet()) {
-                if (entry.getValue().equals(player)) playerSessionsToNotify.add(entry.getKey());
-            }
-        }
-
-        for (Session session : playerSessionsToNotify) {
-            infoSocketHandlers.get(session).handleMessage(message, session);
-        }
-    }
-
-
     private BuzzwordServer() {
         try {
             playerManagement = new PlayerManagement();
@@ -61,6 +44,22 @@ public class BuzzwordServer implements Singleton {
             BuzzwordServer.serverInstance = new BuzzwordServer();
         }
         return BuzzwordServer.serverInstance;
+    }
+
+    public void notifyInfoSocketHandlers(Player initialPlayer, String message) throws PlayerNotInGameException {
+        Game game = gameManagement.getPlayerInGame(initialPlayer);
+
+        LinkedList<Session> playerSessionsToNotify = new LinkedList<>();
+        LinkedList<Player> playersInGame = new LinkedList<>(game.getGamePlayersAndBoards().keySet());
+        for (Player player : playersInGame) {
+            for (Map.Entry<Session, Player> entry : infoSessions.entrySet()) {
+                if (entry.getValue().equals(player)) playerSessionsToNotify.add(entry.getKey());
+            }
+        }
+
+        for (Session session : playerSessionsToNotify) {
+            infoSocketHandlers.get(session).handleMessage(message, session);
+        }
     }
 
     public void addInfoSocketHandler(Session session, InfoSocketHandler infoSocketHandler) {
